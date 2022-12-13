@@ -12,7 +12,6 @@ module.exports =  function (role){
                 return  res.status(401).json({body: 'Вход не выполнен'})
             }
             const decoded = jwt.verify(token, process.env.SECRET_KEY)
-            console.log(decoded);
             if (!decoded.userSettings){
                 return res.status(403).json({message: 'У вас нет доступа'})
             }
