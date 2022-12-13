@@ -13,7 +13,7 @@ module.exports = new Sequelize(
             min: 0,
             acquire: 60000,
             idle: 10000
-          }
+          } 
         // port: process.env.DB_PORT
     }
 ) 
