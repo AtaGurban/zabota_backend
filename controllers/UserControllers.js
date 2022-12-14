@@ -3,16 +3,16 @@ const bcrypt = require('bcrypt')
 const { User } = require('../models/models')
 const jwt = require('jsonwebtoken')
 
-const generateJwt = (id, name, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency) => {
-    return jwt.sign({ id, name, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency}, process.env.SECRET_KEY, { expiresIn: '24h' })
+const generateJwt = (id, login, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency) => {
+    return jwt.sign({ id, login, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency}, process.env.SECRET_KEY, { expiresIn: '24h' })
 }
 
 class UserController {
     async registration(req, res, next) {
         try { 
-            const { name, password, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency } = req.body;
+            const { login, firstName, lastName, password, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency } = req.body;
 
-            if (!password || !name || !phone) {
+            if (!password || !login || !phone) {
                 return next(ApiError.badRequest('Непольные данные'))
             }
             const candidateByLogin = await User.findOne({ where: { name } })
@@ -21,8 +21,8 @@ class UserController {
                 return next(ApiError.badRequest('Пользователь с такими даннымы существует'))
             }
             const hashPassword = await bcrypt.hash(password, 5)
-            const user = await User.create({ name, password: hashPassword, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency})
-            const token = generateJwt(user.id, user.name, user.phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency)
+            const user = await User.create({ login, password: hashPassword, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency})
+            const token = generateJwt(user.id, user.login, firstName, lastName, user.phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency)
             return res.json({ token })
         } catch (error) {
             return next(ApiError.badRequest(error))
@@ -34,7 +34,7 @@ class UserController {
         if (!password || !name) {
             return next(ApiError.badRequest('Непольные данные'))
         }
-        const user = await User.findOne({ where: { name } })
+        const user = await User.findOne({ where: { login: name } })
         if (!user) {
             return next(ApiError.internal('Такой пользователь не существует'))
         }

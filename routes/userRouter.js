@@ -8,7 +8,8 @@ const router = new Router()
 
 
 
-router.post('/registration', checkRoleMiddleware('ADMIN'), UserControllers.registration)
+// router.post('/registration', checkRoleMiddleware('ADMIN'), UserControllers.registration)
+router.post('/registration', UserControllers.registration)
 router.post('/login', UserControllers.login)
 router.get('/auth', authMiddleware, UserControllers.check)
 

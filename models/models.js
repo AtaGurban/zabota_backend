@@ -4,7 +4,9 @@ const {DataTypes} = require('sequelize')
 
 const User = sequelize.define('user', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-    name: {type:DataTypes.STRING, unique: true},  
+    login: {type:DataTypes.STRING, unique: true},  
+    firstName: {type:DataTypes.STRING, unique: true},  
+    lastName: {type:DataTypes.STRING, unique: true},  
     // email: {type:DataTypes.STRING, unique: true},
     phone: {type:DataTypes.STRING, unique: true},
     password: {type:DataTypes.STRING},
@@ -38,6 +40,12 @@ const Сoupon = sequelize.define('coupon', {
     name: {type:DataTypes.STRING},  
 })
 
+const EventHistory = sequelize.define('event-history', {
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+    event: {type:DataTypes.STRING},  
+    date: {type:DataTypes.DATE},  
+})
+
 const Call = sequelize.define('call', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
     type: {type:DataTypes.STRING},  
@@ -52,7 +60,10 @@ const Call = sequelize.define('call', {
 })
 
 
+
 User.hasMany(Customer, {as: 'customer'})
+
+User.hasMany(EventHistory, {as: 'history'})
 
 User.hasMany(Call, {as: 'call'})
 
@@ -63,5 +74,5 @@ Customer.hasMany(Call, {as: 'call'})
 
 
 module.exports = {
-    User, Customer, Сoupon, Call
+    User, Customer, Сoupon, Call, EventHistory
 }
