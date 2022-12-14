@@ -5,8 +5,8 @@ const {DataTypes} = require('sequelize')
 const User = sequelize.define('user', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
     login: {type:DataTypes.STRING, unique: true},  
-    firstName: {type:DataTypes.STRING, unique: true},  
-    lastName: {type:DataTypes.STRING, unique: true},  
+    firstName: {type:DataTypes.STRING},  
+    lastName: {type:DataTypes.STRING},  
     // email: {type:DataTypes.STRING, unique: true},
     phone: {type:DataTypes.STRING, unique: true},
     password: {type:DataTypes.STRING},
@@ -18,12 +18,12 @@ const User = sequelize.define('user', {
     userSettings: {type: DataTypes.BOOLEAN, defaultValue: false},
     eventLog: {type: DataTypes.BOOLEAN, defaultValue: false},
     employeeEfficiency: {type: DataTypes.BOOLEAN, defaultValue: false},
-    // role: {type:DataTypes.STRING, defaultValue: 'USER'},
+    role: {type:DataTypes.STRING, defaultValue: 'USER'},
     firstRate: {type:DataTypes.FLOAT, defaultValue: 0},
     secondRate: {type:DataTypes.FLOAT, defaultValue: 0},
     thirdRate: {type:DataTypes.FLOAT, defaultValue: 0},
 })
- 
+  
 const Customer = sequelize.define('customer', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
     name: {type:DataTypes.STRING},  
