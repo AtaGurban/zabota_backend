@@ -16,4 +16,4 @@ router.delete('/', checkRoleMiddleware('ADMIN'), UserControllers.deleteUser)
 router.get('/', checkRoleMiddleware('ADMIN'), UserControllers.getAllUsers)
 router.put('/', checkRoleMiddleware('ADMIN'), UserControllers.updateUser)
 
-module.exports = router
+module.exports = router 

@@ -24,6 +24,11 @@ const fileUpload = require("express-fileupload");
 const router = require("./routes/index");
 const ErrorHandlingMiddleware = require("./middleware/ErrorHandlingMiddleware");
 const path = require("path");
+const { getStatus } = require("./service/getStatusDeal");
+const { Status, Manager, Contact } = require("./models/models");
+const { getManager } = require("./service/getManager");
+const { getContacts } = require("./service/getContacts");
+const { getDeals } = require("./service/getDeals");
 const app = express();
 
 
@@ -56,7 +61,25 @@ const start = async () => {
 
     // httpsServer.listen(443, () => console.log(`server started on port 443`));
     app.listen(PORT, ()=> console.log(`server started on port ${PORT}`))
-
+    const checkStatus = await Status.count()
+    const checkManager = await Manager.count()
+    const checkContacts = await Contact.count()
+    if (checkStatus === 0){
+      await getStatus()
+    }
+    if (checkManager === 0){
+      await getManager('start')
+    }
+    setInterval(async()=>{
+      await getManager('update')
+    }, 10 * 24 * 60 * 60 * 1000)
+    if (checkContacts === 0){
+      await getContacts('start')
+    }
+    setInterval(async()=>{
+      await getContacts('update') 
+    }, 24 * 60 * 60 * 1000)
+    // await getDeals('start')
   } catch (error) {
     console.log(error);  
   }  

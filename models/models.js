@@ -46,6 +46,50 @@ const EventHistory = sequelize.define('event-history', {
     date: {type:DataTypes.DATE},  
 })
 
+const Status = sequelize.define('status', {
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+    status_id: {type:DataTypes.INTEGER},  
+    status_name: {type:DataTypes.STRING},  
+})
+
+const Deal = sequelize.define('deal', {
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+    deal_id: {type:DataTypes.INTEGER},  
+    price: {type:DataTypes.INTEGER},  
+    price_second: {type:DataTypes.INTEGER},  
+    status_id: {type:DataTypes.INTEGER},  
+    manager_id: {type:DataTypes.INTEGER},  
+    second_manager_id: {type:DataTypes.INTEGER},  
+    lawyer_id: {type:DataTypes.INTEGER},  
+    broker_id: {type:DataTypes.INTEGER},  
+    client_id: {type:DataTypes.INTEGER},  
+    comment: {type:DataTypes.STRING},  
+    abc_status: {type:DataTypes.STRING},  
+    complete: {type:DataTypes.BOOLEAN},  
+    deleted: {type:DataTypes.BOOLEAN},  
+})
+
+const Manager = sequelize.define('manager', {
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+    manager_id: {type:DataTypes.BIGINT},  
+    manager_name: {type:DataTypes.STRING},  
+    manager_phone: {type:DataTypes.STRING},  
+    manager_email: {type:DataTypes.STRING},  
+    manager_position: {type:DataTypes.STRING},  
+})
+
+const Contact = sequelize.define('contact', {
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+    contact_id: {type:DataTypes.BIGINT},  
+    contact_name: {type:DataTypes.STRING},  
+    contact_phone_two: {type:DataTypes.STRING},  
+    contact_phone: {type:DataTypes.STRING},  
+    contact_email: {type:DataTypes.STRING},  
+    contact_type: {type:DataTypes.STRING},  
+    birthdate: {type:DataTypes.DATE},  
+    manager_id: {type:DataTypes.INTEGER},  
+})
+
 const Call = sequelize.define('call', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
     type: {type:DataTypes.STRING},  
@@ -58,6 +102,7 @@ const Call = sequelize.define('call', {
     rating: {type:DataTypes.INTEGER},  
     status: {type:DataTypes.STRING},  
 })
+
 
 
 
@@ -74,5 +119,5 @@ Customer.hasMany(Call, {as: 'call'})
 
 
 module.exports = {
-    User, Customer, Сoupon, Call, EventHistory
+    User, Customer, Сoupon, Call, EventHistory, Status, Manager, Contact, Deal
 }
