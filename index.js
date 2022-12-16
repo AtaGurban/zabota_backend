@@ -25,10 +25,11 @@ const router = require("./routes/index");
 const ErrorHandlingMiddleware = require("./middleware/ErrorHandlingMiddleware");
 const path = require("path");
 const { getStatus } = require("./service/getStatusDeal");
-const { Status, Manager, Contact, Deal } = require("./models/models");
+const { Status, Manager, Contact, Deal, Event } = require("./models/models");
 const { getManager } = require("./service/getManager");
 const { getContacts } = require("./service/getContacts");
 const { getDeals } = require("./service/getDeals");
+const { events } = require("./utils/constData");
 const app = express();
 
 
@@ -40,7 +41,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/user", express.static(path.resolve(__dirname, "files", "images")));
+app.use("/api/static", express.static(path.resolve(__dirname, "files", "images")));
 app.use(fileUpload({}));
 app.use("/api", router);
 app.use(ErrorHandlingMiddleware);
@@ -65,6 +66,14 @@ const start = async () => {
     const checkManager = await Manager.count()
     const checkContacts = await Contact.count()
     const checkDeals = await Deal.count()
+    const checkEvents = await Event.count()
+    if (checkEvents === 0){
+      events.map((i)=>{
+        Event.create({
+          event: i
+        })
+      })
+    }
     if (checkStatus === 0){
       await getStatus()
     }
@@ -85,7 +94,7 @@ const start = async () => {
     }, 24 * 60 * 60 * 1000)
     setInterval(async()=>{
       await getDeals('update')
-    }, 12 * 60 * 60 * 1000)
+    }, 24 * 60 * 60 * 1000)
   } catch (error) { 
     console.log(error);  
   }  

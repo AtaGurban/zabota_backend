@@ -3,7 +3,7 @@ const moment = require("moment/moment");
 const { Deal } = require("../models/models");
 
 const urlDeals = 'https://nerielt.app/api/deals?token=709B0D21504685B87D27ADD360FA12E6' 
-const dateOffset = (14 * 60 * 60 * 1000)
+const dateOffset = (26 * 60 * 60 * 1000)
 let myDate = new Date();
 myDate.setTime(myDate.getTime() - dateOffset);
 let dateForFilteer = moment.utc(myDate).format()

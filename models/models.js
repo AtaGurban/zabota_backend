@@ -19,31 +19,38 @@ const User = sequelize.define('user', {
     eventLog: {type: DataTypes.BOOLEAN, defaultValue: false},
     employeeEfficiency: {type: DataTypes.BOOLEAN, defaultValue: false},
     role: {type:DataTypes.STRING, defaultValue: 'USER'},
-    firstRate: {type:DataTypes.FLOAT, defaultValue: 0},
-    secondRate: {type:DataTypes.FLOAT, defaultValue: 0},
-    thirdRate: {type:DataTypes.FLOAT, defaultValue: 0},
+    // firstRate: {type:DataTypes.FLOAT, defaultValue: 0},
+    // secondRate: {type:DataTypes.FLOAT, defaultValue: 0},
+    // thirdRate: {type:DataTypes.FLOAT, defaultValue: 0},
 })
   
-const Customer = sequelize.define('customer', {
-    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-    name: {type:DataTypes.STRING},  
-    email: {type:DataTypes.STRING, unique: true},
-    phone: {type:DataTypes.STRING, unique: true},
-    password: {type:DataTypes.STRING},
-    birthDay: {type: DataTypes.DATE},
-    linkDate: {type:DataTypes.DATE, defaultValue: null},
-    status: {type:DataTypes.STRING},  
-})
+// const Customer = sequelize.define('customer', {
+//     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+//     name: {type:DataTypes.STRING},  
+//     email: {type:DataTypes.STRING, unique: true},
+//     phone: {type:DataTypes.STRING, unique: true},
+//     password: {type:DataTypes.STRING},
+//     birthDay: {type: DataTypes.DATE},
+//     linkDate: {type:DataTypes.DATE, defaultValue: null},
+//     status: {type:DataTypes.STRING},  
+// })
 
 const Сoupon = sequelize.define('coupon', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-    name: {type:DataTypes.STRING},  
+    title: {type:DataTypes.STRING},  
+    description: {type:DataTypes.STRING},  
+    contacts: {type:DataTypes.STRING},  
+    img: {type:DataTypes.STRING},  
 })
 
 const EventHistory = sequelize.define('event-history', {
-    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-    event: {type:DataTypes.STRING},  
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true}, 
     date: {type:DataTypes.DATE},  
+})
+
+const Event = sequelize.define('event', {
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true}, 
+    event: {type:DataTypes.STRING},  
 })
 
 const Status = sequelize.define('status', {
@@ -103,21 +110,33 @@ const Call = sequelize.define('call', {
     status: {type:DataTypes.STRING},  
 })
 
+const Rating = sequelize.define('rating', {
+    id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
+    rate: {type:DataTypes.FLOAT, defaultValue: 0},
+    type: {type:DataTypes.STRING, defaultValue: ''},
+    count: {type:DataTypes.BIGINT, defaultValue: 0} 
+})
 
 
 
-User.hasMany(Customer, {as: 'customer'})
+Manager.hasMany(Rating, {as: 'rating'})
+
+User.hasMany(Deal, {as: 'deal'})
 
 User.hasMany(EventHistory, {as: 'history'})
 
-User.hasMany(Call, {as: 'call'})
+Event.hasMany(EventHistory, {as: 'history'})
 
-Customer.hasMany(Сoupon, {as: 'coupon'})
+User.hasMany(Call, {as: 'call'}) 
 
-Customer.hasMany(Call, {as: 'call'})
+Contact.hasMany(EventHistory, {as: 'history'})
+
+Deal.hasMany(Сoupon, {as: 'coupon'})
+
+Contact.hasMany(Call, {as: 'call'})
 
 
 
 module.exports = {
-    User, Customer, Сoupon, Call, EventHistory, Status, Manager, Contact, Deal
+    User, Сoupon, Call, Event, EventHistory, Status, Manager, Contact, Deal, Rating
 }
