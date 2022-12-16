@@ -25,7 +25,7 @@ const router = require("./routes/index");
 const ErrorHandlingMiddleware = require("./middleware/ErrorHandlingMiddleware");
 const path = require("path");
 const { getStatus } = require("./service/getStatusDeal");
-const { Status, Manager, Contact } = require("./models/models");
+const { Status, Manager, Contact, Deal } = require("./models/models");
 const { getManager } = require("./service/getManager");
 const { getContacts } = require("./service/getContacts");
 const { getDeals } = require("./service/getDeals");
@@ -64,11 +64,15 @@ const start = async () => {
     const checkStatus = await Status.count()
     const checkManager = await Manager.count()
     const checkContacts = await Contact.count()
+    const checkDeals = await Deal.count()
     if (checkStatus === 0){
       await getStatus()
     }
     if (checkManager === 0){
       await getManager('start')
+    }
+    if (checkDeals === 0){
+      await getDeals('start')
     }
     setInterval(async()=>{
       await getManager('update')
@@ -79,8 +83,10 @@ const start = async () => {
     setInterval(async()=>{
       await getContacts('update') 
     }, 24 * 60 * 60 * 1000)
-    // await getDeals('start')
-  } catch (error) {
+    setInterval(async()=>{
+      await getDeals('update')
+    }, 12 * 60 * 60 * 1000)
+  } catch (error) { 
     console.log(error);  
   }  
 }; 

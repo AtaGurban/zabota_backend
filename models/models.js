@@ -55,7 +55,7 @@ const Status = sequelize.define('status', {
 const Deal = sequelize.define('deal', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
     deal_id: {type:DataTypes.INTEGER},  
-    price: {type:DataTypes.INTEGER},  
+    price: {type:DataTypes.BIGINT},  
     price_second: {type:DataTypes.INTEGER},  
     status_id: {type:DataTypes.INTEGER},  
     manager_id: {type:DataTypes.INTEGER},  
@@ -63,11 +63,11 @@ const Deal = sequelize.define('deal', {
     lawyer_id: {type:DataTypes.INTEGER},  
     broker_id: {type:DataTypes.INTEGER},  
     client_id: {type:DataTypes.INTEGER},  
-    comment: {type:DataTypes.STRING},  
+    comment: {type:DataTypes.TEXT},   
     abc_status: {type:DataTypes.STRING},  
     complete: {type:DataTypes.BOOLEAN},  
     deleted: {type:DataTypes.BOOLEAN},  
-})
+}) 
 
 const Manager = sequelize.define('manager', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
