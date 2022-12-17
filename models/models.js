@@ -37,7 +37,7 @@ const User = sequelize.define('user', {
 
 const Сoupon = sequelize.define('coupon', {
     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-    title: {type:DataTypes.STRING},  
+    title: {type:DataTypes.STRING, unique: true},  
     description: {type:DataTypes.STRING},  
     contacts: {type:DataTypes.STRING},  
     img: {type:DataTypes.STRING},
@@ -135,8 +135,6 @@ User.hasMany(Call, {as: 'call'})
 
 Contact.hasMany(EventHistory, {as: 'history'})
 EventHistory.belongsTo(Contact, {as: 'contact'})
- 
-Deal.hasMany(Сoupon, {as: 'coupon'})
 
 Contact.hasMany(Call, {as: 'call'})
 
