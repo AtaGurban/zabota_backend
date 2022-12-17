@@ -40,7 +40,9 @@ const Сoupon = sequelize.define('coupon', {
     title: {type:DataTypes.STRING},  
     description: {type:DataTypes.STRING},  
     contacts: {type:DataTypes.STRING},  
-    img: {type:DataTypes.STRING},  
+    img: {type:DataTypes.STRING},
+    count: {type:DataTypes.BIGINT},
+    limited: {type:DataTypes.BOOLEAN},
 })
 
 const EventHistory = sequelize.define('event-history', {
@@ -124,13 +126,16 @@ Manager.hasMany(Rating, {as: 'rating'})
 User.hasMany(Deal, {as: 'deal'})
 
 User.hasMany(EventHistory, {as: 'history'})
+EventHistory.belongsTo(User, {as: 'user'})
 
 Event.hasMany(EventHistory, {as: 'history'})
+EventHistory.belongsTo(Event, {as: 'event'})
 
 User.hasMany(Call, {as: 'call'}) 
 
 Contact.hasMany(EventHistory, {as: 'history'})
-
+EventHistory.belongsTo(Contact, {as: 'contact'})
+ 
 Deal.hasMany(Сoupon, {as: 'coupon'})
 
 Contact.hasMany(Call, {as: 'call'})
