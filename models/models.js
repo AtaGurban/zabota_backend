@@ -10,7 +10,7 @@ const User = sequelize.define('user', {
     // email: {type:DataTypes.STRING, unique: true},
     phone: {type:DataTypes.STRING, unique: true},
     password: {type:DataTypes.STRING},
-    com: {type: DataTypes.STRING},
+    // com: {type: DataTypes.STRING},
     deleted: {type: DataTypes.BOOLEAN, defaultValue: false},
     customerService: {type: DataTypes.BOOLEAN, defaultValue: false},
     customerDataBase: {type: DataTypes.BOOLEAN, defaultValue: false},
