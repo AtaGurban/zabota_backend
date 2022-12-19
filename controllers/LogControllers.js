@@ -12,7 +12,6 @@ class LogController {
             const offset = (page - 1) * limit;
             filter = JSON.parse(filter)
             let logs
-            console.log(limit);
             if ((filter.date.max === '') && (filter.date.min === '') && (!eventId) && (!userId) && (dealLike === '')){
                 logs = await EventHistory.findAndCountAll({include:[{model: User, as: 'user'}, {model: Event, as: 'event'}, {model: Contact, as: 'contact'}], limit, offset})
             }
