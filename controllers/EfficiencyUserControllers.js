@@ -12,10 +12,9 @@ const {
 class getEfficiencyUsersController {
   async getEfficiencyUsers(req, res, next) {
     try {
-      let { filter, userId } = req.query
-      filter = JSON.parse(filter)
+      let { dateMin, dateMax, userId } = req.query
       let result = []
-      if (filter.date.min === 'null' && filter.date.max === 'null' && !userId) {
+      if (!dateMin && !dateMax && !userId) {
         const users = await User.findAll({
           include: [
             { model: Call, as: 'call' },
@@ -69,7 +68,7 @@ class getEfficiencyUsersController {
           })
         }
       }
-      if (filter.date.min !== 'null' && filter.date.max === 'null' && !userId) {
+      if (dateMin && !dateMax && !userId) {
         const users = await User.findAll({
           include: [
             { model: Call, as: 'call' },
@@ -134,7 +133,7 @@ class getEfficiencyUsersController {
           })
         }
       }
-      if (filter.date.min !== 'null' && filter.date.max === 'null' && userId) {
+      if (dateMin && !dateMax && userId) {
         const users = await User.findAll({
           where: { id: userId },
           include: [
@@ -200,7 +199,7 @@ class getEfficiencyUsersController {
           })
         }
       }
-      if (filter.date.min === 'null' && filter.date.max !== 'null' && !userId) {
+      if (!dateMin && dateMax && !userId) {
         const users = await User.findAll({
           include: [
             { model: Call, as: 'call' },
@@ -265,7 +264,7 @@ class getEfficiencyUsersController {
           })
         }
       }
-      if (filter.date.min !== 'null' && filter.date.max !== 'null' && !userId) {
+      if (dateMin && dateMax && !userId) {
         const users = await User.findAll({
           include: [
             { model: Call, as: 'call' },
@@ -338,7 +337,7 @@ class getEfficiencyUsersController {
           })
         }
       }
-      if (filter.date.min !== 'null' && filter.date.max !== 'null' && userId) {
+      if (dateMin && dateMax && userId) {
         const users = await User.findAll({
           where: { id: userId },
           include: [
@@ -412,7 +411,7 @@ class getEfficiencyUsersController {
           })
         }
       }
-      if (filter.date.min === 'null' && filter.date.max !== 'null' && userId) {
+      if (!dateMin && dateMax && userId) {
         const users = await User.findAll({
           where: { id: userId },
           include: [
@@ -478,7 +477,7 @@ class getEfficiencyUsersController {
           })
         }
       }
-      if (filter.date.min === 'null' && filter.date.max === 'null' && userId) {
+      if (!dateMin && !dateMax && userId) {
         const users = await User.findAll({
           where: { id: userId },
           include: [

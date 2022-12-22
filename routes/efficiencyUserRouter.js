@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 const router = new Router()
 
-router.get('/', EfficiencyUserControllers.getEfficiencyUsers)
+router.post('/', EfficiencyUserControllers.getEfficiencyUsers)
 
 
 

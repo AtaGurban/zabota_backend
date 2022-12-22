@@ -5,18 +5,17 @@ const { Event, EventHistory, User, Contact } = require('../models/models')
 class LogController {
   async getLog(req, res, next) {
     try {
-      let { filter, eventId, userId, dealLike } = req.query
+      let { dateMin, dateMax, eventId, userId, dealLike } = req.body
       let page = req.query.page || 1
       let limit = req.query.limit || 25
       const offset = (page - 1) * limit
-      filter = JSON.parse(filter)
       let logs
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         !eventId &&
         !userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           include: [
@@ -29,11 +28,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        !dateMin &&
         !eventId &&
         !userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.lte]: new Date(filter.date.max) } },
@@ -47,11 +46,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min !== 'null' &&
+        !dateMax &&
+        dateMin &&
         !eventId &&
         !userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.gte]: new Date(filter.date.min) } },
@@ -65,11 +64,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         eventId &&
         !userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { eventId },
@@ -83,11 +82,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         !eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { userId },
@@ -101,11 +100,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         !eventId &&
         !userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           include: [
@@ -122,11 +121,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
+        dateMax &&
+        dateMin &&
         !eventId &&
         !userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -147,11 +146,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
+        dateMax &&
+        dateMin &&
         !eventId &&
         !userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -176,11 +175,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
+        dateMax &&
+        dateMin &&
         eventId &&
         !userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -202,11 +201,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
+        dateMax &&
+        dateMin &&
         !eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -228,11 +227,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
+        dateMax &&
+        dateMin &&
         !eventId &&
         userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -258,11 +257,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
+        dateMax &&
+        dateMin &&
         eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -285,45 +284,15 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
+        dateMax &&
+        dateMin &&
         eventId &&
         userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
             userId,
-            eventId,
-            date: {
-              [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
-              },
-            },
-          },
-          include: [
-            { model: User, as: 'user' },
-            { model: Event, as: 'event' },
-            {
-              model: Contact,
-              as: 'contact',
-              where: { contact_name: { [Op.like]: `%${dealLike}%` } },
-            },
-          ],
-          limit,
-          offset,
-        })
-      }
-      if (
-        filter.date.max !== 'null' &&
-        filter.date.min !== 'null' &&
-        eventId &&
-        !userId &&
-        dealLike !== ''
-      ) {
-        logs = await EventHistory.findAndCountAll({
-          where: {
             eventId,
             date: {
               [Op.and]: {
@@ -346,11 +315,41 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        dateMin &&
         eventId &&
         !userId &&
-        dealLike === ''
+        dealLike
+      ) {
+        logs = await EventHistory.findAndCountAll({
+          where: {
+            eventId,
+            date: {
+              [Op.and]: {
+                [Op.gte]: new Date(filter.date.min),
+                [Op.lte]: new Date(filter.date.max),
+              },
+            },
+          },
+          include: [
+            { model: User, as: 'user' },
+            { model: Event, as: 'event' },
+            {
+              model: Contact,
+              as: 'contact',
+              where: { contact_name: { [Op.like]: `%${dealLike}%` } },
+            },
+          ],
+          limit,
+          offset,
+        })
+      }
+      if (
+        dateMax &&
+        !dateMin &&
+        eventId &&
+        !userId &&
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.lte]: new Date(filter.date.max) }, eventId },
@@ -364,11 +363,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        !dateMin &&
         eventId &&
         !userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.lte]: new Date(filter.date.max) }, eventId },
@@ -386,11 +385,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        !dateMin &&
         !eventId &&
         userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
@@ -408,11 +407,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        !dateMin &&
         eventId &&
         userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -434,11 +433,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        !dateMin &&
         !eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
@@ -452,11 +451,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        !dateMin &&
         eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -474,11 +473,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== 'null' &&
-        filter.date.min === 'null' &&
+        dateMax &&
+        !dateMin &&
         !eventId &&
         !userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
@@ -496,11 +495,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min !== 'null' &&
+        !dateMax &&
+        dateMin &&
         eventId &&
         !userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.gte]: new Date(filter.date.min) }, eventId },
@@ -514,11 +513,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min !== 'null' &&
+        !dateMax &&
+        dateMin &&
         eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -536,11 +535,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min !== 'null' &&
+        !dateMax &&
+        dateMin &&
         !eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.gte]: new Date(filter.date.min) }, userId },
@@ -554,11 +553,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min !== 'null' &&
+        !dateMax &&
+        dateMin &&
         !eventId &&
         !userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { date: { [Op.gte]: new Date(filter.date.min) } },
@@ -576,11 +575,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min !== 'null' &&
+        !dateMax &&
+        dateMin &&
         eventId &&
         userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
@@ -602,11 +601,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         eventId &&
         userId &&
-        dealLike === ''
+        !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { eventId, userId },
@@ -620,11 +619,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         !eventId &&
         userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { userId },
@@ -642,11 +641,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         eventId &&
         userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { userId, eventId },
@@ -664,11 +663,11 @@ class LogController {
         })
       }
       if (
-        filter.date.max === 'null' &&
-        filter.date.min === 'null' &&
+        !dateMax &&
+        !dateMin &&
         eventId &&
         !userId &&
-        dealLike !== ''
+        dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
           where: { eventId },

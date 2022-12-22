@@ -7,7 +7,7 @@ const router = new Router()
 
 
 // router.get('/', authMiddleware, LogControllers.getLog)
-router.get('/', LogControllers.getLog)
+router.post('/', LogControllers.getLog)
 router.get('/events', authMiddleware, LogControllers.getEvents)
 
 
