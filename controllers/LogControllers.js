@@ -9,11 +9,12 @@ class LogController {
       let page = req.query.page || 1
       let limit = req.query.limit || 25
       const offset = (page - 1) * limit
-      filter = JSON.parse(filter)
+      if (filter){
+        filter = JSON.parse(filter)
+      }
       let logs
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        !filter &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -29,14 +30,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         !eventId &&
         !userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) } },
+          where: { date: { [Op.lte]: new Date(filter?.date?.max) } },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -47,14 +48,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min !== '' &&
         !eventId &&
         !userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) } },
+          where: { date: { [Op.gte]: new Date(filter?.date?.min) } },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -65,8 +66,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min === '' &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -83,8 +84,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min === '' &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -101,8 +102,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min === '' &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -122,8 +123,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -132,8 +133,8 @@ class LogController {
           where: {
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
               },
             },
           },
@@ -147,8 +148,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -157,90 +158,8 @@ class LogController {
           where: {
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
-              },
-            },
-          },
-          include: [
-            { model: User, as: 'user' },
-            { model: Event, as: 'event' },
-            {
-              model: Contact,
-              as: 'contact',
-              where: { contact_name: { [Op.like]: `%${dealLike}%` } },
-            },
-          ],
-          limit,
-          offset,
-        })
-      }
-      if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
-        eventId &&
-        !userId &&
-        dealLike === ''
-      ) {
-        logs = await EventHistory.findAndCountAll({
-          where: {
-            eventId,
-            date: {
-              [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
-              },
-            },
-          },
-          include: [
-            { model: User, as: 'user' },
-            { model: Event, as: 'event' },
-            { model: Contact, as: 'contact' },
-          ],
-          limit,
-          offset,
-        })
-      }
-      if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
-        !eventId &&
-        userId &&
-        dealLike === ''
-      ) {
-        logs = await EventHistory.findAndCountAll({
-          where: {
-            userId,
-            date: {
-              [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
-              },
-            },
-          },
-          include: [
-            { model: User, as: 'user' },
-            { model: Event, as: 'event' },
-            { model: Contact, as: 'contact' },
-          ],
-          limit,
-          offset,
-        })
-      }
-      if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
-        !eventId &&
-        userId &&
-        dealLike !== ''
-      ) {
-        logs = await EventHistory.findAndCountAll({
-          where: {
-            userId,
-            date: {
-              [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
               },
             },
           },
@@ -258,20 +177,19 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
         eventId &&
-        userId &&
+        !userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            userId,
             eventId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
               },
             },
           },
@@ -285,20 +203,45 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
-        eventId &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
+        !eventId &&
+        userId &&
+        dealLike === ''
+      ) {
+        logs = await EventHistory.findAndCountAll({
+          where: {
+            userId,
+            date: {
+              [Op.and]: {
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
+              },
+            },
+          },
+          include: [
+            { model: User, as: 'user' },
+            { model: Event, as: 'event' },
+            { model: Contact, as: 'contact' },
+          ],
+          limit,
+          offset,
+        })
+      }
+      if (
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
+        !eventId &&
         userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
             userId,
-            eventId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
               },
             },
           },
@@ -316,19 +259,47 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
         eventId &&
-        !userId &&
+        userId &&
+        dealLike === ''
+      ) {
+        logs = await EventHistory.findAndCountAll({
+          where: {
+            userId,
+            eventId,
+            date: {
+              [Op.and]: {
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
+              },
+            },
+          },
+          include: [
+            { model: User, as: 'user' },
+            { model: Event, as: 'event' },
+            { model: Contact, as: 'contact' },
+          ],
+          limit,
+          offset,
+        })
+      }
+      if (
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
+        eventId &&
+        userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
+            userId,
             eventId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
               },
             },
           },
@@ -346,14 +317,44 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min !== '' &&
+        eventId &&
+        !userId &&
+        dealLike !== ''
+      ) {
+        logs = await EventHistory.findAndCountAll({
+          where: {
+            eventId,
+            date: {
+              [Op.and]: {
+                [Op.gte]: new Date(filter?.date?.min),
+                [Op.lte]: new Date(filter?.date?.max),
+              },
+            },
+          },
+          include: [
+            { model: User, as: 'user' },
+            { model: Event, as: 'event' },
+            {
+              model: Contact,
+              as: 'contact',
+              where: { contact_name: { [Op.like]: `%${dealLike}%` } },
+            },
+          ],
+          limit,
+          offset,
+        })
+      }
+      if (
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         eventId &&
         !userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, eventId },
+          where: { date: { [Op.lte]: new Date(filter?.date?.max) }, eventId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -364,14 +365,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         eventId &&
         !userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, eventId },
+          where: { date: { [Op.lte]: new Date(filter?.date?.max) }, eventId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -386,14 +387,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         !eventId &&
         userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
+          where: { date: { [Op.lte]: new Date(filter?.date?.max) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -408,15 +409,15 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         eventId &&
         userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.lte]: new Date(filter.date.max) },
+            date: { [Op.lte]: new Date(filter?.date?.max) },
             eventId,
             userId,
           },
@@ -434,14 +435,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         !eventId &&
         userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
+          where: { date: { [Op.lte]: new Date(filter?.date?.max) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -452,15 +453,15 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         eventId &&
         userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.lte]: new Date(filter.date.max) },
+            date: { [Op.lte]: new Date(filter?.date?.max) },
             eventId,
             userId,
           },
@@ -474,14 +475,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter?.date?.max !== '' &&
+        filter?.date?.min === '' &&
         !eventId &&
         !userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
+          where: { date: { [Op.lte]: new Date(filter?.date?.max) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -496,14 +497,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min !== '' &&
         eventId &&
         !userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) }, eventId },
+          where: { date: { [Op.gte]: new Date(filter?.date?.min) }, eventId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -514,15 +515,15 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min !== '' &&
         eventId &&
         userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.gte]: new Date(filter.date.min) },
+            date: { [Op.gte]: new Date(filter?.date?.min) },
             eventId,
             userId,
           },
@@ -536,14 +537,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min !== '' &&
         !eventId &&
         userId &&
         dealLike === ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) }, userId },
+          where: { date: { [Op.gte]: new Date(filter?.date?.min) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -554,14 +555,14 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min !== '' &&
         !eventId &&
         !userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) } },
+          where: { date: { [Op.gte]: new Date(filter?.date?.min) } },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -576,15 +577,15 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min !== '' &&
         eventId &&
         userId &&
         dealLike !== ''
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.gte]: new Date(filter.date.min) },
+            date: { [Op.gte]: new Date(filter?.date?.min) },
             eventId,
             userId,
           },
@@ -602,8 +603,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min === '' &&
         eventId &&
         userId &&
         dealLike === ''
@@ -620,8 +621,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min === '' &&
         !eventId &&
         userId &&
         dealLike !== ''
@@ -642,8 +643,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min === '' &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -664,8 +665,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter?.date?.max === '' &&
+        filter?.date?.min === '' &&
         eventId &&
         !userId &&
         dealLike !== ''
