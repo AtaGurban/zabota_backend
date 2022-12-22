@@ -30,8 +30,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -48,8 +48,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min !== '' &&
+        !filter?.date?.max &&
+        filter?.date?.min &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -66,8 +66,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min === '' &&
+        !filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -84,8 +84,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min === '' &&
+        !filter?.date?.max &&
+        !filter?.date?.min &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -102,8 +102,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min === '' &&
+        !filter?.date?.max &&
+        !filter?.date?.min &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -123,8 +123,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -148,8 +148,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -177,8 +177,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -203,8 +203,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -229,8 +229,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         !eventId &&
         userId &&
         dealLike !== ''
@@ -259,8 +259,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         eventId &&
         userId &&
         dealLike === ''
@@ -286,8 +286,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -317,8 +317,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min !== '' &&
+        filter?.date?.max &&
+        filter?.date?.min &&
         eventId &&
         !userId &&
         dealLike !== ''
@@ -347,8 +347,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -365,8 +365,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         !userId &&
         dealLike !== ''
@@ -387,8 +387,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         !eventId &&
         userId &&
         dealLike !== ''
@@ -409,8 +409,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -435,8 +435,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -453,8 +453,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         userId &&
         dealLike === ''
@@ -475,8 +475,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max !== '' &&
-        filter?.date?.min === '' &&
+        filter?.date?.max &&
+        !filter?.date?.min &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -497,8 +497,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min !== '' &&
+        !filter?.date?.max &&
+        filter?.date?.min &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -515,8 +515,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min !== '' &&
+        !filter?.date?.max &&
+        filter?.date?.min &&
         eventId &&
         userId &&
         dealLike === ''
@@ -537,8 +537,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min !== '' &&
+        !filter?.date?.max &&
+        filter?.date?.min &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -555,8 +555,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min !== '' &&
+        !filter?.date?.max &&
+        filter?.date?.min &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -577,8 +577,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min !== '' &&
+        !filter?.date?.max &&
+        filter?.date?.min &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -603,8 +603,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min === '' &&
+        !filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         userId &&
         dealLike === ''
@@ -621,8 +621,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min === '' &&
+        !filter?.date?.max &&
+        !filter?.date?.min &&
         !eventId &&
         userId &&
         dealLike !== ''
@@ -643,8 +643,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min === '' &&
+        !filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -665,8 +665,8 @@ class LogController {
         })
       }
       if (
-        filter?.date?.max === '' &&
-        filter?.date?.min === '' &&
+        !filter?.date?.max &&
+        !filter?.date?.min &&
         eventId &&
         !userId &&
         dealLike !== ''
