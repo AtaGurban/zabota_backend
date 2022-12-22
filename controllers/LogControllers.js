@@ -12,8 +12,8 @@ class LogController {
       filter = JSON.parse(filter)
       let logs
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -29,8 +29,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -47,8 +47,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter.date.max === 'null' &&
+        filter.date.min !== 'null' &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -65,8 +65,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -83,8 +83,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -101,8 +101,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -122,8 +122,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         !eventId &&
         !userId &&
         dealLike === ''
@@ -147,8 +147,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -176,8 +176,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -202,8 +202,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -228,8 +228,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         !eventId &&
         userId &&
         dealLike !== ''
@@ -258,8 +258,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         eventId &&
         userId &&
         dealLike === ''
@@ -285,8 +285,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -316,8 +316,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min !== '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min !== 'null' &&
         eventId &&
         !userId &&
         dealLike !== ''
@@ -346,8 +346,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -364,8 +364,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         !userId &&
         dealLike !== ''
@@ -386,8 +386,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         userId &&
         dealLike !== ''
@@ -408,8 +408,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -434,8 +434,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -452,8 +452,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         userId &&
         dealLike === ''
@@ -474,8 +474,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max !== '' &&
-        filter.date.min === '' &&
+        filter.date.max !== 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -496,8 +496,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter.date.max === 'null' &&
+        filter.date.min !== 'null' &&
         eventId &&
         !userId &&
         dealLike === ''
@@ -514,8 +514,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter.date.max === 'null' &&
+        filter.date.min !== 'null' &&
         eventId &&
         userId &&
         dealLike === ''
@@ -536,8 +536,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter.date.max === 'null' &&
+        filter.date.min !== 'null' &&
         !eventId &&
         userId &&
         dealLike === ''
@@ -554,8 +554,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter.date.max === 'null' &&
+        filter.date.min !== 'null' &&
         !eventId &&
         !userId &&
         dealLike !== ''
@@ -576,8 +576,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min !== '' &&
+        filter.date.max === 'null' &&
+        filter.date.min !== 'null' &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -602,8 +602,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         userId &&
         dealLike === ''
@@ -620,8 +620,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         !eventId &&
         userId &&
         dealLike !== ''
@@ -642,8 +642,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         userId &&
         dealLike !== ''
@@ -664,8 +664,8 @@ class LogController {
         })
       }
       if (
-        filter.date.max === '' &&
-        filter.date.min === '' &&
+        filter.date.max === 'null' &&
+        filter.date.min === 'null' &&
         eventId &&
         !userId &&
         dealLike !== ''
