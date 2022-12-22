@@ -35,7 +35,7 @@ class LogController {
         !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) } },
+          where: { date: { [Op.lte]: new Date(dateMax) } },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -53,7 +53,7 @@ class LogController {
         !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) } },
+          where: { date: { [Op.gte]: new Date(dateMin) } },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -131,8 +131,8 @@ class LogController {
           where: {
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -156,8 +156,8 @@ class LogController {
           where: {
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -186,8 +186,8 @@ class LogController {
             eventId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -212,8 +212,8 @@ class LogController {
             userId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -238,8 +238,8 @@ class LogController {
             userId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -269,8 +269,8 @@ class LogController {
             eventId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -296,8 +296,8 @@ class LogController {
             eventId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -326,8 +326,8 @@ class LogController {
             eventId,
             date: {
               [Op.and]: {
-                [Op.gte]: new Date(filter.date.min),
-                [Op.lte]: new Date(filter.date.max),
+                [Op.gte]: new Date(dateMin),
+                [Op.lte]: new Date(dateMax),
               },
             },
           },
@@ -352,7 +352,7 @@ class LogController {
         !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, eventId },
+          where: { date: { [Op.lte]: new Date(dateMax) }, eventId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -370,7 +370,7 @@ class LogController {
         dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, eventId },
+          where: { date: { [Op.lte]: new Date(dateMax) }, eventId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -392,7 +392,7 @@ class LogController {
         dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
+          where: { date: { [Op.lte]: new Date(dateMax) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -415,7 +415,7 @@ class LogController {
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.lte]: new Date(filter.date.max) },
+            date: { [Op.lte]: new Date(dateMax) },
             eventId,
             userId,
           },
@@ -440,7 +440,7 @@ class LogController {
         !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
+          where: { date: { [Op.lte]: new Date(dateMax) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -459,7 +459,7 @@ class LogController {
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.lte]: new Date(filter.date.max) },
+            date: { [Op.lte]: new Date(dateMax) },
             eventId,
             userId,
           },
@@ -480,7 +480,7 @@ class LogController {
         dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.lte]: new Date(filter.date.max) }, userId },
+          where: { date: { [Op.lte]: new Date(dateMax) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -502,7 +502,7 @@ class LogController {
         !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) }, eventId },
+          where: { date: { [Op.gte]: new Date(dateMin) }, eventId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -521,7 +521,7 @@ class LogController {
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.gte]: new Date(filter.date.min) },
+            date: { [Op.gte]: new Date(dateMin) },
             eventId,
             userId,
           },
@@ -542,7 +542,7 @@ class LogController {
         !dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) }, userId },
+          where: { date: { [Op.gte]: new Date(dateMin) }, userId },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -560,7 +560,7 @@ class LogController {
         dealLike
       ) {
         logs = await EventHistory.findAndCountAll({
-          where: { date: { [Op.gte]: new Date(filter.date.min) } },
+          where: { date: { [Op.gte]: new Date(dateMin) } },
           include: [
             { model: User, as: 'user' },
             { model: Event, as: 'event' },
@@ -583,7 +583,7 @@ class LogController {
       ) {
         logs = await EventHistory.findAndCountAll({
           where: {
-            date: { [Op.gte]: new Date(filter.date.min) },
+            date: { [Op.gte]: new Date(dateMin) },
             eventId,
             userId,
           },

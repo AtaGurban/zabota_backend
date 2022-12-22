@@ -85,29 +85,29 @@ class getEfficiencyUsersController {
         for (let i = 0; i < users.length; i++) {
           const element = users[i]
           const outCallsCount = (element?.call?.filter((j) => {
-            return j.type === 'out' && +new Date(j.updatedAt) > +new Date(filter.date.min)
+            return j.type === 'out' && +new Date(j.updatedAt) > +new Date(dateMin)
           })).length
           const errorCallsCount = (element?.call?.filter((j) => {
             return (
               j.status !== 'SUCCESS' &&
-              +new Date(j.updatedAt) > +new Date(filter.date.min)
+              +new Date(j.updatedAt) > +new Date(dateMin)
             )
           })).length
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
-          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(filter.date.min)})).length
+          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
           const filledEstimates = 0
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
-              return +new Date(j.updatedAt) > new Date(filter.date.min)
+              return +new Date(j.updatedAt) > new Date(dateMin)
             })).length || 0
-          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(filter.date.min)})).length
-          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(filter.date.min)})).length
+          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
+          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
           const talkTime = (
             element?.call
               .filter((j) => {
-                return +new Date(j.updatedAt) > +new Date(filter.date.min)
+                return +new Date(j.updatedAt) > +new Date(dateMin)
               })
               .reduce(function (summ, item) {
                 return summ + item.duration
@@ -151,29 +151,29 @@ class getEfficiencyUsersController {
         for (let i = 0; i < users.length; i++) {
           const element = users[i]
           const outCallsCount = (element?.call?.filter((j) => {
-            return j.type === 'out' && +new Date(j.updatedAt) > +new Date(filter.date.min)
+            return j.type === 'out' && +new Date(j.updatedAt) > +new Date(dateMin)
           })).length
           const errorCallsCount = (element?.call?.filter((j) => {
             return (
               j.status !== 'SUCCESS' &&
-              +new Date(j.updatedAt) > +new Date(filter.date.min)
+              +new Date(j.updatedAt) > +new Date(dateMin)
             )
           })).length
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
-          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(filter.date.min)})).length
+          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
           const filledEstimates = 0
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
-              return +new Date(j.updatedAt) > new Date(filter.date.min)
+              return +new Date(j.updatedAt) > new Date(dateMin)
             })).length || 0
-          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(filter.date.min)})).length
-          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(filter.date.min)})).length
+          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
+          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
           const talkTime = (
             element?.call
               .filter((j) => {
-                return +new Date(j.updatedAt) > +new Date(filter.date.min)
+                return +new Date(j.updatedAt) > +new Date(dateMin)
               })
               .reduce(function (summ, item) {
                 return summ + item.duration
@@ -216,29 +216,29 @@ class getEfficiencyUsersController {
         for (let i = 0; i < users.length; i++) {
           const element = users[i]
           const outCallsCount = (element?.call?.filter((j) => {
-            return j.type === 'out' && +new Date(j.updatedAt) < +new Date(filter.date.max)
+            return j.type === 'out' && +new Date(j.updatedAt) < +new Date(dateMax)
           })).length
           const errorCallsCount = (element?.call?.filter((j) => {
             return (
               j.status !== 'SUCCESS' &&
-              +new Date(j.updatedAt) < +new Date(filter.date.max)
+              +new Date(j.updatedAt) < +new Date(dateMax)
             )
           })).length
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
-          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(filter.date.max)})).length
+          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
           const filledEstimates = 0
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
-              return +new Date(j.updatedAt) > new Date(filter.date.min)
+              return +new Date(j.updatedAt) > new Date(dateMin)
             })).length || 0
-          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(filter.date.max)})).length
-          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(filter.date.max)})).length
+          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
+          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
           const talkTime = (
             element?.call
               .filter((j) => {
-                return +new Date(j.updatedAt) < +new Date(filter.date.max)
+                return +new Date(j.updatedAt) < +new Date(dateMax)
               })
               .reduce(function (summ, item) {
                 return summ + item.duration
@@ -283,34 +283,34 @@ class getEfficiencyUsersController {
           const outCallsCount = (element?.call?.filter((j) => {
             return (
               j.type === 'out' &&
-              +new Date(j.updatedAt) < +new Date(filter.date.max) &&
-              +new Date(j.updatedAt) > +new Date(filter.date.min)
+              +new Date(j.updatedAt) < +new Date(dateMax) &&
+              +new Date(j.updatedAt) > +new Date(dateMin)
             )
           })).length
           const errorCallsCount = (element?.call?.filter((j) => {
             return (
               j.status !== 'SUCCESS' &&
-              +new Date(j.updatedAt) < +new Date(filter.date.max) &&
-              +new Date(j.updatedAt) > +new Date(filter.date.min)
+              +new Date(j.updatedAt) < +new Date(dateMax) &&
+              +new Date(j.updatedAt) > +new Date(dateMin)
             )
           })).length
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
-          const happedBirtDay = (element['birthday-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(filter.date.max)) && (+new Date(j.updatedAt) > +new Date(filter.date.min))})).length
+          const happedBirtDay = (element['birthday-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
           const filledEstimates = 0
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
-              return +new Date(j.updatedAt) > new Date(filter.date.min)
+              return +new Date(j.updatedAt) > new Date(dateMin)
             })).length || 0
-          const countSendCoupons = (element['coupon-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(filter.date.max)) && (+new Date(j.updatedAt) > +new Date(filter.date.min))})).length
-          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(filter.date.max)) && (+new Date(j.updatedAt) > +new Date(filter.date.min))})).length
+          const countSendCoupons = (element['coupon-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
+          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
           const talkTime = (
             element?.call
               .filter((j) => {
                 return (
-                  +new Date(j.updatedAt) < +new Date(filter.date.max) &&
-                  +new Date(j.updatedAt) > +new Date(filter.date.min)
+                  +new Date(j.updatedAt) < +new Date(dateMax) &&
+                  +new Date(j.updatedAt) > +new Date(dateMin)
                 )
               })
               .reduce(function (summ, item) {
@@ -357,34 +357,34 @@ class getEfficiencyUsersController {
           const outCallsCount = (element?.call?.filter((j) => {
             return (
               j.type === 'out' &&
-              +new Date(j.updatedAt) < +new Date(filter.date.max) &&
-              +new Date(j.updatedAt) > +new Date(filter.date.min)
+              +new Date(j.updatedAt) < +new Date(dateMax) &&
+              +new Date(j.updatedAt) > +new Date(dateMin)
             )
           })).length
           const errorCallsCount = (element?.call?.filter((j) => {
             return (
               j.status !== 'SUCCESS' &&
-              +new Date(j.updatedAt) < +new Date(filter.date.max) &&
-              +new Date(j.updatedAt) > +new Date(filter.date.min)
+              +new Date(j.updatedAt) < +new Date(dateMax) &&
+              +new Date(j.updatedAt) > +new Date(dateMin)
             )
           })).length
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
-          const happedBirtDay = (element['birthday-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(filter.date.max)) && (+new Date(j.updatedAt) > +new Date(filter.date.min))})).length
+          const happedBirtDay = (element['birthday-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
           const filledEstimates = 0
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
-              return +new Date(j.updatedAt) > new Date(filter.date.min)
+              return +new Date(j.updatedAt) > new Date(dateMin)
             })).length || 0
-          const countSendCoupons = (element['coupon-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(filter.date.max)) && (+new Date(j.updatedAt) > +new Date(filter.date.min))})).length
-          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(filter.date.max)) && (+new Date(j.updatedAt) > +new Date(filter.date.min))})).length
+          const countSendCoupons = (element['coupon-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
+          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
           const talkTime = (
             element?.call
               .filter((j) => {
                 return (
-                  +new Date(j.updatedAt) < +new Date(filter.date.max) &&
-                  +new Date(j.updatedAt) > +new Date(filter.date.min)
+                  +new Date(j.updatedAt) < +new Date(dateMax) &&
+                  +new Date(j.updatedAt) > +new Date(dateMin)
                 )
               })
               .reduce(function (summ, item) {
@@ -429,29 +429,29 @@ class getEfficiencyUsersController {
         for (let i = 0; i < users.length; i++) {
           const element = users[i]
           const outCallsCount = (element?.call?.filter((j) => {
-            return j.type === 'out' && +new Date(j.updatedAt) < +new Date(filter.date.max)
+            return j.type === 'out' && +new Date(j.updatedAt) < +new Date(dateMax)
           })).length
           const errorCallsCount = (element?.call?.filter((j) => {
             return (
               j.status !== 'SUCCESS' &&
-              +new Date(j.updatedAt) < +new Date(filter.date.max)
+              +new Date(j.updatedAt) < +new Date(dateMax)
             )
           })).length
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
-          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(filter.date.max)})).length
+          const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
           const filledEstimates = 0
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
-              return +new Date(j.updatedAt) > new Date(filter.date.min)
+              return +new Date(j.updatedAt) > new Date(dateMin)
             })).length || 0
-          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(filter.date.max)})).length
-          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(filter.date.max)})).length
+          const countSendCoupons = (element['coupon-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
+          const referralToAnotherSpecialist = (element['referral-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
           const talkTime = (
             element?.call
               .filter((j) => {
-                return +new Date(j.updatedAt) < +new Date(filter.date.max)
+                return +new Date(j.updatedAt) < +new Date(dateMax)
               })
               .reduce(function (summ, item) {
                 return summ + item.duration
