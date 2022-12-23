@@ -21,8 +21,8 @@ class UserController {
             if (candidateByPhone || candidateByLogin) {
                 return next(ApiError.badRequest('Пользователь с такими даннымы существует'))
             }
-            const hashPassword = await bcrypt.hash(password, 5)
-            const user = await User.create({ login, password: hashPassword, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency })
+            // const hashPassword = await bcrypt.hash(password, 5)
+            const user = await User.create({ login, password, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency })
             const token = generateJwt(user.id, user.role, user.login, firstName, lastName, user.phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency)
             return res.json({ token })
         } catch (error) {
@@ -41,9 +41,9 @@ class UserController {
             if (!user) {
                 return next(ApiError.internal('Такой пользователь не существует'))
             }
-            let comparePassword = bcrypt.compareSync(password, user.password)
+            let comparePassword = password === user.password
             if (!comparePassword) {
-                return next(ApiError.internal('Неправильный пароль'))
+                return next(ApiError.internal('Пароль не верный проверьте пароль или попросите отправить вам повторно пароль'))
             }
             const token = generateJwt(user.id, user.role, user.login, user.firstName, user.lastName, user.phone, user.customerService, user.customerDataBase, user.scenarioSettings, user.userSettings, user.eventLog, user.employeeEfficiency)
             return res.json({ token })
