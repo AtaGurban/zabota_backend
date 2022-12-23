@@ -75,6 +75,8 @@ const Deal = sequelize.define("deal", {
   abc_status: { type: DataTypes.STRING },
   complete: { type: DataTypes.BOOLEAN },
   deleted: { type: DataTypes.BOOLEAN },
+  deletedOfOurDB: { type: DataTypes.BOOLEAN, defaultValue: false },
+  unvisibleUntilDate: { type: DataTypes.DATE, defaultValue: null },
 });
 
 const Manager = sequelize.define("manager", {
@@ -118,8 +120,44 @@ const Rating = sequelize.define("rating", {
   count: { type: DataTypes.BIGINT, defaultValue: 0 },
 });
 
+const TypeScenario = sequelize.define("type_scenario", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+  name: { type: DataTypes.STRING, allowNull: false },
+  color: { type: DataTypes.STRING, allowNull: false },
+});
+
+const EndActionsScenario = sequelize.define("end_actions_scenario", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+});
+ 
+const Scenario = sequelize.define("scenario", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  fromDate: { type: DataTypes.DATE, defaultValue: null },
+  untilDate: { type: DataTypes.DATE, defaultValue: null },
+  firstNew: { type: DataTypes.BOOLEAN, defaultValue: null }, 
+  name: { type: DataTypes.STRING, allowNull: false },
+  completedAction: { type: DataTypes.INTEGER, allowNull: false },
+  notDoneAction: { type: DataTypes.INTEGER, allowNull: false },
+  notRingUpAction: { type: DataTypes.INTEGER, allowNull: false },
+});
+
 const HistoryHappedBirtDay = sequelize.define("history-happed-birthday", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+});
+
+const ReCallAction = sequelize.define("recall-action", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  unit: { type: DataTypes.STRING },
+  count: { type: DataTypes.INTEGER },
+  actionNumber: { type: DataTypes.INTEGER },
+  time: { type: DataTypes.DATE },
+});
+
+const ChangeStatus = sequelize.define("change-status", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  typeScenarioId: { type: DataTypes.BIGINT },
 });
 
 const HistorySendCoupon = sequelize.define("history-send-coupon", {
@@ -137,6 +175,15 @@ const HistoryReferralToAnotherSpecialist = sequelize.define(
 Manager.hasMany(Rating, { as: "rating" });
 
 User.hasMany(Deal, { as: "deal" });
+ 
+TypeScenario.hasMany(Scenario, { as: "scenario" });
+
+Scenario.hasMany(ReCallAction, { as: "recall" });
+
+Scenario.hasMany(ChangeStatus, { as: "change-status" });
+
+EndActionsScenario.hasMany(Scenario, { as: "scenario" });
+// Scenario.belongsTo(EndActionsScenario, { as: "end-actions" });
 
 User.hasMany(HistoryHappedBirtDay, { as: "birthday-history" });
 
@@ -168,14 +215,19 @@ module.exports = {
   User,
   Сoupon,
   Call,
+  EndActionsScenario,
   HistorySendCoupon, 
   HistoryReferralToAnotherSpecialist,
   Event,
   EventHistory,
+  ReCallAction,
   Status,
   Manager,
   Contact,
+  Scenario,
+  ChangeStatus,
   Deal,
+  TypeScenario,
   Rating,
   HistoryHappedBirtDay,
 };
