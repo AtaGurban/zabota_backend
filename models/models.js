@@ -131,6 +131,11 @@ const EndActionsScenario = sequelize.define("end_actions_scenario", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
 });
+
+const ModuleScenario = sequelize.define("module_scenario", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+});
  
 const Scenario = sequelize.define("scenario", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
@@ -182,8 +187,12 @@ Scenario.hasMany(ReCallAction, { as: "recall" });
 
 Scenario.hasMany(ChangeStatus, { as: "change-status" });
 
+Scenario.hasMany(Deal, { as: "deal" });
+
 EndActionsScenario.hasMany(Scenario, { as: "scenario" });
 // Scenario.belongsTo(EndActionsScenario, { as: "end-actions" });
+
+// ModuleScenario.hasMany(Scenario, { as: "scenario" });
 
 User.hasMany(HistoryHappedBirtDay, { as: "birthday-history" });
 
@@ -217,6 +226,7 @@ module.exports = {
   Call,
   EndActionsScenario,
   HistorySendCoupon, 
+  ModuleScenario,
   HistoryReferralToAnotherSpecialist,
   Event,
   EventHistory,

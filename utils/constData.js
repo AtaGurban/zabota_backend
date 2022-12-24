@@ -1,6 +1,9 @@
 const events = ['Вход систему', 'Входящий звонок', 'Исходящий звонок', 'Клиент поздравлен с днем рождения', 'Отправлен подарочный купон', ]
+
 const endActionsScenarioList = ['Повторный звонок через', 'Смена статуса', 'Удаляем из базы' ]
 
+const moduleScenarioList = ['Текст', 'Текст с заголовком', 'Чек-лист', 'Комментарий', 'Выпадающий список', 'Оценка сотрудника', 'Ссылка на регистрацию', 'Отправка купона', 'Смена специалиста' ]
+
 module.exports = {
-    events, endActionsScenarioList
+    events, endActionsScenarioList, moduleScenarioList
 }

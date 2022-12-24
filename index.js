@@ -25,11 +25,11 @@ const router = require("./routes/index");
 const ErrorHandlingMiddleware = require("./middleware/ErrorHandlingMiddleware");
 const path = require("path");
 const { getStatus } = require("./service/getStatusDeal");
-const { Status, Manager, Contact, Deal, Event, EndActionsScenario } = require("./models/models");
+const { Status, Manager, Contact, Deal, Event, EndActionsScenario, ModuleScenario } = require("./models/models");
 const { getManager } = require("./service/getManager");
 const { getContacts } = require("./service/getContacts");
 const { getDeals } = require("./service/getDeals");
-const { events, endActionsScenarioList } = require("./utils/constData");
+const { events, endActionsScenarioList, moduleScenarioList } = require("./utils/constData");
 const app = express();
 
 
@@ -67,7 +67,15 @@ const start = async () => {
     const checkContacts = await Contact.count()
     const checkDeals = await Deal.count()
     const checkEvents = await Event.count()
-    const checkEndActions = await EndActionsScenario.count()
+    const checkEndActionsScenario = await EndActionsScenario.count()
+    const checkModuleScenario = await ModuleScenario.count()
+    if (checkModuleScenario === 0){
+      moduleScenarioList.map(async (name)=>{
+        await ModuleScenario.create({
+          name
+        })
+      })
+    }
     if (checkEvents === 0){
       events.map(async (i)=>{
         await Event.create({
@@ -78,7 +86,7 @@ const start = async () => {
     if (checkStatus === 0){
       await getStatus()
     }
-    if (checkEndActions === 0){
+    if (checkEndActionsScenario === 0){
       endActionsScenarioList.map(async (name)=>{
         await EndActionsScenario.create({
           name
