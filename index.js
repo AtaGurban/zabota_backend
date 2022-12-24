@@ -25,7 +25,7 @@ const router = require("./routes/index");
 const ErrorHandlingMiddleware = require("./middleware/ErrorHandlingMiddleware");
 const path = require("path");
 const { getStatus } = require("./service/getStatusDeal");
-const { Status, Manager, Contact, Deal, Event, EndActionsScenario, ModuleScenario } = require("./models/models");
+const { Status, Manager, Contact, Deal, Event, EndActionsScenario, ModuleForScenario } = require("./models/models");
 const { getManager } = require("./service/getManager");
 const { getContacts } = require("./service/getContacts");
 const { getDeals } = require("./service/getDeals");
@@ -68,10 +68,10 @@ const start = async () => {
     const checkDeals = await Deal.count()
     const checkEvents = await Event.count()
     const checkEndActionsScenario = await EndActionsScenario.count()
-    const checkModuleScenario = await ModuleScenario.count()
+    const checkModuleScenario = await ModuleForScenario.count()
     if (checkModuleScenario === 0){
       moduleScenarioList.map(async (name)=>{
-        await ModuleScenario.create({
+        await ModuleForScenario.create({
           name
         })
       })
