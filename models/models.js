@@ -9,7 +9,6 @@ const User = sequelize.define("user", {
   // email: {type:DataTypes.STRING, unique: true},
   phone: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
-  // com: {type: DataTypes.STRING},
   deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
   customerService: { type: DataTypes.BOOLEAN, defaultValue: false },
   customerDataBase: { type: DataTypes.BOOLEAN, defaultValue: false },
@@ -18,21 +17,7 @@ const User = sequelize.define("user", {
   eventLog: { type: DataTypes.BOOLEAN, defaultValue: false },
   employeeEfficiency: { type: DataTypes.BOOLEAN, defaultValue: false },
   role: { type: DataTypes.STRING, defaultValue: "USER" },
-  // firstRate: {type:DataTypes.FLOAT, defaultValue: 0},
-  // secondRate: {type:DataTypes.FLOAT, defaultValue: 0},
-  // thirdRate: {type:DataTypes.FLOAT, defaultValue: 0},
 });
-
-// const Customer = sequelize.define('customer', {
-//     id: {type:DataTypes.BIGINT, primaryKey: true, autoIncrement: true},
-//     name: {type:DataTypes.STRING},
-//     email: {type:DataTypes.STRING, unique: true},
-//     phone: {type:DataTypes.STRING, unique: true},
-//     password: {type:DataTypes.STRING},
-//     birthDay: {type: DataTypes.DATE},
-//     linkDate: {type:DataTypes.DATE, defaultValue: null},
-//     status: {type:DataTypes.STRING},
-// })
 
 const Сoupon = sequelize.define("coupon", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
@@ -86,6 +71,9 @@ const Manager = sequelize.define("manager", {
   manager_phone: { type: DataTypes.STRING },
   manager_email: { type: DataTypes.STRING },
   manager_position: { type: DataTypes.STRING },
+  firstRate: {type:DataTypes.FLOAT, defaultValue: 0},
+  secondRate: {type:DataTypes.FLOAT, defaultValue: 0},
+  thirdRate: {type:DataTypes.FLOAT, defaultValue: 0},
 });
 
 const Contact = sequelize.define("contact", {
@@ -132,20 +120,25 @@ const EndActionsScenario = sequelize.define("end_actions_scenario", {
   name: { type: DataTypes.STRING, allowNull: false },
 });
 
-const ModuleScenario = sequelize.define("module_scenario", {
+const ModuleForScenario = sequelize.define("module_for_scenario", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false },
 });
- 
+
 const Scenario = sequelize.define("scenario", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   fromDate: { type: DataTypes.DATE, defaultValue: null },
   untilDate: { type: DataTypes.DATE, defaultValue: null },
-  firstNew: { type: DataTypes.BOOLEAN, defaultValue: null }, 
+  firstNew: { type: DataTypes.BOOLEAN, defaultValue: null },
   name: { type: DataTypes.STRING, allowNull: false },
   completedAction: { type: DataTypes.INTEGER, allowNull: false },
   notDoneAction: { type: DataTypes.INTEGER, allowNull: false },
   notRingUpAction: { type: DataTypes.INTEGER, allowNull: false },
+});
+
+const ModuleWithScenario = sequelize.define("module_with_scenario", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
 });
 
 const HistoryHappedBirtDay = sequelize.define("history-happed-birthday", {
@@ -162,7 +155,7 @@ const ReCallAction = sequelize.define("recall-action", {
 
 const ChangeStatus = sequelize.define("change-status", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  typeScenarioId: { type: DataTypes.BIGINT },
+  // typeScenarioId: { type: DataTypes.BIGINT },
 });
 
 const HistorySendCoupon = sequelize.define("history-send-coupon", {
@@ -180,19 +173,22 @@ const HistoryReferralToAnotherSpecialist = sequelize.define(
 Manager.hasMany(Rating, { as: "rating" });
 
 User.hasMany(Deal, { as: "deal" });
- 
+
 TypeScenario.hasMany(Scenario, { as: "scenario" });
 
 Scenario.hasMany(ReCallAction, { as: "recall" });
 
 Scenario.hasMany(ChangeStatus, { as: "change-status" });
 
+TypeScenario.hasMany(ChangeStatus, { as: "change-status" });
+ChangeStatus.belongsTo(TypeScenario, { as: "type-scenario" });
+
 Scenario.hasMany(Deal, { as: "deal" });
 
-EndActionsScenario.hasMany(Scenario, { as: "scenario" });
+// EndActionsScenario.hasMany(Scenario, { as: "scenario" });
 // Scenario.belongsTo(EndActionsScenario, { as: "end-actions" });
 
-// ModuleScenario.hasMany(Scenario, { as: "scenario" });
+// ModuleScenario.hasMany(Scenario, { as: "scenario" }); 
 
 User.hasMany(HistoryHappedBirtDay, { as: "birthday-history" });
 
@@ -212,7 +208,7 @@ Contact.hasMany(EventHistory, { as: "history" });
 
 EventHistory.belongsTo(Contact, { as: "contact" });
 
-Contact.hasMany(Call, { as: "call" });
+Contact.hasMany(Call, { as: "call" }); 
 
 Contact.hasMany(HistoryHappedBirtDay, { as: "birthday-history" });
 
@@ -220,17 +216,27 @@ Contact.hasMany(HistorySendCoupon, { as: "coupon-history" });
 
 Deal.hasMany(HistoryReferralToAnotherSpecialist, { as: "referral-history" });
 
+ModuleForScenario.belongsToMany(Scenario, {
+  through: ModuleWithScenario,
+  as: "scenario",
+});
+Scenario.belongsToMany(ModuleForScenario, {
+  through: ModuleWithScenario,
+  as: "module",
+});
+
 module.exports = {
   User,
   Сoupon,
   Call,
   EndActionsScenario,
-  HistorySendCoupon, 
-  ModuleScenario,
+  HistorySendCoupon,
+  ModuleForScenario,
   HistoryReferralToAnotherSpecialist,
   Event,
   EventHistory,
   ReCallAction,
+  ModuleWithScenario,
   Status,
   Manager,
   Contact,
