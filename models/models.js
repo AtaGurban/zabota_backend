@@ -141,6 +141,69 @@ const ModuleWithScenario = sequelize.define("module_with_scenario", {
   number: { type: DataTypes.INTEGER, allowNull: false },
 });
 
+const ModuleText = sequelize.define("module_text", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+  text: { type: DataTypes.TEXT, allowNull: false },
+});
+
+const ModuleTextWithTitle = sequelize.define("module_text_title", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+  text: { type: DataTypes.TEXT, allowNull: false },
+  title: { type: DataTypes.TEXT, allowNull: false },
+});
+
+const ModuleComment = sequelize.define("module_comment", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+  text: { type: DataTypes.TEXT, allowNull: false },
+  title: { type: DataTypes.TEXT, allowNull: false },
+});
+
+const ModuleSendLink = sequelize.define("module_send_link", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+});
+
+const ModuleCheckList = sequelize.define("module_check_list", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+});
+
+const ModuleDropdown = sequelize.define("module_dropdown", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+  name: { type: DataTypes.STRING, allowNull: false },
+});
+
+const ModuleDropdownItems = sequelize.define("module_dropdown-items", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+  item: { type: DataTypes.STRING, allowNull: false },
+});
+
+const ModuleCheckListItems = sequelize.define("module_check_list_items", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+  text: { type: DataTypes.TEXT, allowNull: false },
+});
+
+const ModuleSendCoupon = sequelize.define("module_send_coupon", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+});
+
+const ModuleRatingUser = sequelize.define("module_rating_user", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+});
+
+const ModuleReferralSpecialist = sequelize.define("module_referral_specialist", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false },
+});
+
 const HistoryHappedBirtDay = sequelize.define("history-happed-birthday", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
@@ -162,7 +225,7 @@ const HistorySendCoupon = sequelize.define("history-send-coupon", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
-const HistoryReferralToAnotherSpecialist = sequelize.define(
+const HistoryReferralToAnotherSpecialist = sequelize.define( 
   "history-referral-to-specialist",
   {
     id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
@@ -179,6 +242,28 @@ TypeScenario.hasMany(Scenario, { as: "scenario" });
 Scenario.hasMany(ReCallAction, { as: "recall" });
 
 Scenario.hasMany(ChangeStatus, { as: "change-status" });
+
+Scenario.hasMany(ModuleText, { as: "module-text" });
+
+Scenario.hasMany(ModuleTextWithTitle, { as: "module-text-title" });
+
+Scenario.hasMany(ModuleComment, { as: "module-comment" });
+
+Scenario.hasMany(ModuleSendLink, { as: "module-send-link" });
+
+Scenario.hasMany(ModuleReferralSpecialist, { as: "module-referral-specialist" });
+
+Scenario.hasMany(ModuleRatingUser, { as: "module-rating-user" });
+
+Scenario.hasMany(ModuleSendCoupon, { as: "module-send-coupon" });
+
+Scenario.hasMany(ModuleDropdown, { as: "module-dropdown" });
+
+ModuleDropdown.hasMany(ModuleDropdownItems, { as: "module-dropdown-items" });
+
+Scenario.hasMany(ModuleCheckList, { as: "module-check-list" });
+
+ModuleCheckList.hasMany(ModuleCheckListItems, { as: "module-check-list-items" });
 
 TypeScenario.hasMany(ChangeStatus, { as: "change-status" });
 ChangeStatus.belongsTo(TypeScenario, { as: "type-scenario" });
@@ -234,15 +319,26 @@ module.exports = {
   ModuleForScenario,
   HistoryReferralToAnotherSpecialist,
   Event,
+  ModuleTextWithTitle,
+  ModuleSendLink,
+  ModuleDropdown,
+  ModuleDropdownItems,
+  ModuleCheckList,
+  ModuleCheckListItems,
+  ModuleReferralSpecialist,
+  ModuleRatingUser,
+  ModuleSendCoupon,
   EventHistory,
   ReCallAction,
   ModuleWithScenario,
   Status,
   Manager,
   Contact,
+  ModuleComment,
   Scenario,
   ChangeStatus,
   Deal,
+  ModuleText,
   TypeScenario,
   Rating,
   HistoryHappedBirtDay,
