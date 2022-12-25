@@ -36,6 +36,33 @@ class CouponController {
         }
 
     }
+    async delete(req, res, next) { 
+        try {
+            let {id} = req.query
+            if (!id){
+                return next(ApiError.badRequest('error'))
+            }
+            const coupon = await Сoupon.findOne({where:{id}})
+            if (coupon){
+                coupon.destroy()
+            }
+            return res.json(coupon)
+        } catch (error) {
+            console.log(error);
+            return next(ApiError.badRequest(error))
+        }
+
+    }
+    async getAll(req, res, next) { 
+        try {
+            const coupons = await Сoupon.findAll()
+            return res.json(coupons)
+        } catch (error) {
+            console.log(error);
+            return next(ApiError.badRequest(error))
+        }
+
+    }
 }
 
 module.exports = new CouponController()
