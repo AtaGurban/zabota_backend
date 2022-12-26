@@ -16,8 +16,8 @@ class UserController {
             if (!password || !login || !phone) {
                 return next(ApiError.badRequest('Непольные данные'))
             }
-            const candidateByLogin = await User.findOne({ where: { login } })
-            const candidateByPhone = await User.findOne({ where: { phone } })
+            const candidateByLogin = await User.findOne({ where: { login, deleted:false } })
+            const candidateByPhone = await User.findOne({ where: { phone, deleted:false } })
             if (candidateByPhone || candidateByLogin) {
                 return next(ApiError.badRequest('Пользователь с такими даннымы существует'))
             }

@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 
 const User = sequelize.define("user", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  login: { type: DataTypes.STRING, unique: true },
+  login: { type: DataTypes.STRING,  },
   firstName: { type: DataTypes.STRING },
   lastName: { type: DataTypes.STRING },
   // email: {type:DataTypes.STRING, unique: true},
