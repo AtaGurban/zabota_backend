@@ -1,6 +1,6 @@
 const ApiError = require("../error/ApiError")
 const bcrypt = require('bcrypt')
-const { User } = require('../models/models')
+const { User, Event, EventHistory } = require('../models/models')
 const jwt = require('jsonwebtoken')
 const jwt_decode = require('jwt-decode')
 
@@ -15,7 +15,7 @@ class UserController {
 
             if (!password || !login || !phone) {
                 return next(ApiError.badRequest('Непольные данные'))
-            }
+            } 
             const candidateByLogin = await User.findOne({ where: { login, deleted:false } })
             const candidateByPhone = await User.findOne({ where: { phone, deleted:false } })
             if (candidateByPhone || candidateByLogin) {
@@ -45,6 +45,11 @@ class UserController {
             if (!comparePassword) {
                 return next(ApiError.internal('Пароль не верный проверьте пароль или попросите отправить вам повторно пароль'))
             }
+            const eventLogin = await Event.findOne({where:{event: 'Вход систему'}})
+            const historyItem = await EventHistory.create({
+                eventId: eventLogin.id,
+                userId: req.user.id
+            })
             const token = generateJwt(user.id, user.role, user.login, user.firstName, user.lastName, user.phone, user.customerService, user.customerDataBase, user.scenarioSettings, user.userSettings, user.eventLog, user.employeeEfficiency)
             return res.json({ token })
         } catch (error) {
@@ -55,6 +60,11 @@ class UserController {
     }
     async check(req, res, next) {
         try {
+            const eventLogin = await Event.findOne({where:{event: 'Вход систему'}})
+            const historyItem = await EventHistory.create({
+                eventId: eventLogin.id,
+                userId: req.user.id
+            })
             const token = generateJwt(req.user.id, req.user.role, req.user.login, req.user.firstName, req.user.lastName, req.user.phone, req.user.customerService, req.user.customerDataBase, req.user.scenarioSettings, req.user.userSettings, req.user.eventLog, req.user.employeeEfficiency)
             return res.json({ token })
         } catch (error) {
@@ -93,9 +103,9 @@ class UserController {
             const decodedUser = await User.findOne({ where: { login } });
             let users
             if (decodedUser.role === 'ADMIN'){
-                users = await User.findAll({ where: { deleted: false } })
+                users = await User.findAll()
             } else {
-                users = await User.findAll({ where: { deleted: false, role: 'USER' } })
+                users = await User.findAll({ where: { role: 'USER' } })
             }
             return res.json(users)
         } catch (error) {
