@@ -65,6 +65,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
+            user: `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -529,6 +530,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
+            user: `${element.firstName} ${element.lastName}`,
           })
         }
       }
