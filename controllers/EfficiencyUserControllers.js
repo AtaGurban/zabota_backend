@@ -65,7 +65,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -130,7 +130,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -196,7 +196,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -261,7 +261,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -334,7 +334,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -408,7 +408,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -474,7 +474,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
@@ -530,7 +530,7 @@ class getEfficiencyUsersController {
             referralToAnotherSpecialist,
             talkTime,
             timeInSystem,
-            user: `${element.firstName} ${element.lastName}`,
+            user: (element.deleted) ? `${element.firstName} ${element.lastName} (удален)` : `${element.firstName} ${element.lastName}`,
           })
         }
       }
