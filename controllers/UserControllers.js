@@ -48,7 +48,8 @@ class UserController {
             const eventLogin = await Event.findOne({where:{event: 'Вход систему'}})
             const historyItem = await EventHistory.create({
                 eventId: eventLogin.id,
-                userId: req.user.id
+                userId: req.user.id,
+                date: new Date()
             })
             const token = generateJwt(user.id, user.role, user.login, user.firstName, user.lastName, user.phone, user.customerService, user.customerDataBase, user.scenarioSettings, user.userSettings, user.eventLog, user.employeeEfficiency)
             return res.json({ token })
@@ -63,7 +64,8 @@ class UserController {
             const eventLogin = await Event.findOne({where:{event: 'Вход систему'}})
             const historyItem = await EventHistory.create({
                 eventId: eventLogin.id,
-                userId: req.user.id
+                userId: req.user.id,
+                date: new Date()
             })
             const token = generateJwt(req.user.id, req.user.role, req.user.login, req.user.firstName, req.user.lastName, req.user.phone, req.user.customerService, req.user.customerDataBase, req.user.scenarioSettings, req.user.userSettings, req.user.eventLog, req.user.employeeEfficiency)
             return res.json({ token })
