@@ -48,7 +48,7 @@ class UserController {
             const eventLogin = await Event.findOne({where:{event: 'Вход систему'}})
             const historyItem = await EventHistory.create({
                 eventId: eventLogin.id,
-                userId: req.user.id,
+                userId: user.id,
                 date: new Date()
             })
             const token = generateJwt(user.id, user.role, user.login, user.firstName, user.lastName, user.phone, user.customerService, user.customerDataBase, user.scenarioSettings, user.userSettings, user.eventLog, user.employeeEfficiency)
