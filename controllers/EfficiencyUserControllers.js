@@ -12,7 +12,7 @@ const {
 class getEfficiencyUsersController {
   async getEfficiencyUsers(req, res, next) {
     try {
-      let { dateMin, dateMax, userId } = req.query
+      let { dateMin, dateMax, userId } = req.body
       let result = []
       if (!dateMin && !dateMax && !userId) {
         const users = await User.findAll({
