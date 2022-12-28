@@ -124,7 +124,7 @@ class UserController {
             const temp = { login, firstName, lastName, password, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency }
             let updateUser = {}
             for (const key in temp) {
-                if (temp[key]) {
+                if (temp[key] !== null) {
                     updateUser[key] = temp[key]
                 }
             }
