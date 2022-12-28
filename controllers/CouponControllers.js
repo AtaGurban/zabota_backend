@@ -55,8 +55,17 @@ class CouponController {
     }
     async getAll(req, res, next) { 
         try {
-            const coupons = await Сoupon.findAll()
-            return res.json(coupons)
+            const {limited} = req.query
+            if (limited === 'true'){
+                const coupons = await Сoupon.findAll({where:{limited:true}})
+                return res.json(coupons)
+            } else if (limited === 'false'){
+                const coupons = await Сoupon.findAll({where:{limited:false}})
+                return res.json(coupons)
+            } else {
+                const coupons = await Сoupon.findAll()
+                return res.json(coupons)
+            }
         } catch (error) {
             console.log(error);
             return next(ApiError.badRequest(error))

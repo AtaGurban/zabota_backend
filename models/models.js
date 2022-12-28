@@ -216,7 +216,12 @@ const ReCallAction = sequelize.define("recall-action", {
   time: { type: DataTypes.DATE },
 });
 
-const ChangeStatus = sequelize.define("change-status", {
+const ChangeStatusAction = sequelize.define("change-status", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  // typeScenarioId: { type: DataTypes.BIGINT },
+});
+
+const DeleteAction = sequelize.define("delete", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   // typeScenarioId: { type: DataTypes.BIGINT },
 });
@@ -241,7 +246,9 @@ TypeScenario.hasMany(Scenario, { as: "scenario" });
 
 Scenario.hasMany(ReCallAction, { as: "recall" });
 
-Scenario.hasMany(ChangeStatus, { as: "change-status" });
+Scenario.hasMany(ChangeStatusAction, { as: "change-status" });
+
+Scenario.hasMany(DeleteAction, { as: "delete" });
 
 Scenario.hasMany(ModuleText, { as: "module-text" });
 
@@ -265,8 +272,8 @@ Scenario.hasMany(ModuleCheckList, { as: "module-check-list" });
 
 ModuleCheckList.hasMany(ModuleCheckListItems, { as: "module-check-list-items" });
 
-TypeScenario.hasMany(ChangeStatus, { as: "change-status" });
-ChangeStatus.belongsTo(TypeScenario, { as: "type-scenario" });
+TypeScenario.hasMany(ChangeStatusAction, { as: "change-status" });
+ChangeStatusAction.belongsTo(TypeScenario, { as: "type-scenario" });
 
 Scenario.hasMany(Deal, { as: "deal" });
 
@@ -321,6 +328,7 @@ module.exports = {
   Event,
   ModuleTextWithTitle,
   ModuleSendLink,
+  DeleteAction,
   ModuleDropdown,
   ModuleDropdownItems,
   ModuleCheckList,
@@ -336,7 +344,7 @@ module.exports = {
   Contact,
   ModuleComment,
   Scenario,
-  ChangeStatus,
+  ChangeStatus: ChangeStatusAction,
   Deal,
   ModuleText,
   TypeScenario,
