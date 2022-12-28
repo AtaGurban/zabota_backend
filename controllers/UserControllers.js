@@ -4,8 +4,8 @@ const { User, Event, EventHistory } = require('../models/models')
 const jwt = require('jsonwebtoken')
 const jwt_decode = require('jwt-decode')
 
-const generateJwt = (id, role, login, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency) => {
-    return jwt.sign({ id, role, login, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency }, process.env.SECRET_KEY, { expiresIn: '24h' })
+const generateJwt = (id, password, role, login, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency) => {
+    return jwt.sign({ id, password, role, login, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency }, process.env.SECRET_KEY, { expiresIn: '24h' })
 }
 
 class UserController {
@@ -23,7 +23,7 @@ class UserController {
             }
             // const hashPassword = await bcrypt.hash(password, 5)
             const user = await User.create({ login, password, firstName, lastName, phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency })
-            const token = generateJwt(user.id, user.role, user.login, firstName, lastName, user.phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency)
+            const token = generateJwt(user.id, user.password, user.role, user.login, firstName, lastName, user.phone, customerService, customerDataBase, scenarioSettings, userSettings, eventLog, employeeEfficiency)
             return res.json({ token })
         } catch (error) {
             console.log(error);
@@ -51,7 +51,7 @@ class UserController {
                 userId: user.id,
                 date: new Date()
             })
-            const token = generateJwt(user.id, user.role, user.login, user.firstName, user.lastName, user.phone, user.customerService, user.customerDataBase, user.scenarioSettings, user.userSettings, user.eventLog, user.employeeEfficiency)
+            const token = generateJwt(user.id, user.password, user.role, user.login, user.firstName, user.lastName, user.phone, user.customerService, user.customerDataBase, user.scenarioSettings, user.userSettings, user.eventLog, user.employeeEfficiency)
             return res.json({ token })
         } catch (error) {
             console.log(error);
@@ -67,7 +67,7 @@ class UserController {
                 userId: req.user.id,
                 date: new Date()
             })
-            const token = generateJwt(req.user.id, req.user.role, req.user.login, req.user.firstName, req.user.lastName, req.user.phone, req.user.customerService, req.user.customerDataBase, req.user.scenarioSettings, req.user.userSettings, req.user.eventLog, req.user.employeeEfficiency)
+            const token = generateJwt(req.user.id, req.user.password, req.user.role, req.user.login, req.user.firstName, req.user.lastName, req.user.phone, req.user.customerService, req.user.customerDataBase, req.user.scenarioSettings, req.user.userSettings, req.user.eventLog, req.user.employeeEfficiency)
             return res.json({ token })
         } catch (error) {
             return next(ApiError.badRequest(error))
