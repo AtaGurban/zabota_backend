@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
+const { User } = require('../models/models')
 
-module.exports = function (req, res, next){
+module.exports = async function (req, res, next){
     if (req.method === 'OPTIONS'){
         next()
     }
@@ -10,8 +11,16 @@ module.exports = function (req, res, next){
             return  res.status(401).json({body: 'Вход не выполнен'})
         }
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
-        req.user = decoded
-        next()
+        const {login, password, id} = decoded
+        const user = await User.findOne({where:{id}})
+        let comparePassword = password === user.password
+        let compareLogin = login === user.login
+        if (!compareLogin || !comparePassword){
+            return  res.status(401).json({body: 'Вход не выполнен'})
+        } else{
+            req.user = decoded
+            next()
+        }
     } catch (e) {
         res.status(401).json({body: 'Вход не выполнен'})
     }
