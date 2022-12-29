@@ -25,11 +25,11 @@ const router = require("./routes/index");
 const ErrorHandlingMiddleware = require("./middleware/ErrorHandlingMiddleware");
 const path = require("path");
 const { getStatus } = require("./service/getStatusDeal");
-const { Status, Manager, Contact, Deal, Event, EndActionsScenario, ModuleForScenario } = require("./models/models");
+const { Status, Manager, Contact, Deal, Event, EndActionsScenario, ModuleForScenario, TypeScenario, User } = require("./models/models");
 const { getManager } = require("./service/getManager");
 const { getContacts } = require("./service/getContacts");
 const { getDeals } = require("./service/getDeals");
-const { events, endActionsScenarioList, moduleScenarioList } = require("./utils/constData");
+const { events, endActionsScenarioList, moduleScenarioList, typeScenarioList } = require("./utils/constData");
 const app = express();
 
 
@@ -46,13 +46,6 @@ app.use(fileUpload({}));
 app.use("/api", router);
 app.use(ErrorHandlingMiddleware);
 
-
-
-
-
-
- 
-
 const start = async () => {
   // const httpServer = http.createServer(app);
   // const httpsServer = https.createServer(credentials, app);
@@ -61,14 +54,27 @@ const start = async () => {
     await sequelize.sync();
 
     // httpsServer.listen(443, () => console.log(`server started on port 443`));
-    app.listen(PORT, ()=> console.log(`server started on port ${PORT}`))
+    app.listen(500, ()=> console.log(`server started on port ${PORT}`))
     const checkStatus = await Status.count()
+    const checkUser = await User.count()
     const checkManager = await Manager.count()
+    const checkTypeScenario = await TypeScenario.count()
     const checkContacts = await Contact.count()
     const checkDeals = await Deal.count()
     const checkEvents = await Event.count()
     const checkEndActionsScenario = await EndActionsScenario.count()
     const checkModuleScenario = await ModuleForScenario.count()
+    if (checkUser === 0){
+      const user = await User.create({ login: 'admin', password: '240540', firstName: 'Admin', lastName: 'Admin', phone: '+7 918 717 9343', customerService: true, customerDataBase: true, scenarioSettings: true, userSettings: true, eventLog: true, employeeEfficiency: true })
+    }
+    if (checkTypeScenario === 0){
+      typeScenarioList.map(async (item)=>{
+        const {color, name, number} = item
+        await TypeScenario.create({
+          name, color, number
+        })
+      })
+    }
     if (checkModuleScenario === 0){
       moduleScenarioList.map(async (name)=>{
         await ModuleForScenario.create({

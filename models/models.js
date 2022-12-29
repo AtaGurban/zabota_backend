@@ -242,6 +242,8 @@ Manager.hasMany(Rating, { as: "rating" });
 
 User.hasMany(Deal, { as: "deal" });
 
+TypeScenario.hasMany(Deal, { as: "deal" });
+
 TypeScenario.hasMany(Scenario, { as: "scenario" });
 
 Scenario.hasMany(ReCallAction, { as: "recall" });
