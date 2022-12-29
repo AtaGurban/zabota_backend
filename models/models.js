@@ -216,12 +216,12 @@ const ReCallAction = sequelize.define("recall-action", {
   time: { type: DataTypes.DATE },
 });
 
-const ChangeStatusAction = sequelize.define("change-status", {
+const ChangeStatusAction = sequelize.define("change-status-action", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   // typeScenarioId: { type: DataTypes.BIGINT },
 });
 
-const DeleteAction = sequelize.define("delete", {
+const DeleteAction = sequelize.define("delete-action", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   // typeScenarioId: { type: DataTypes.BIGINT },
 });
@@ -245,12 +245,19 @@ User.hasMany(Deal, { as: "deal" });
 TypeScenario.hasMany(Deal, { as: "deal" });
 
 TypeScenario.hasMany(Scenario, { as: "scenario" });
+Scenario.belongsTo(TypeScenario, { as: "type-scenario" });
 
-Scenario.hasMany(ReCallAction, { as: "recall" });
+Scenario.hasMany(ReCallAction, { as: "recall-action" });
+ 
+Scenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
 
-Scenario.hasMany(ChangeStatusAction, { as: "change-status" });
+Scenario.hasMany(DeleteAction, { as: "delete-action" });
 
-Scenario.hasMany(DeleteAction, { as: "delete" });
+EndActionsScenario.hasMany(ReCallAction, { as: "recall-action" });
+
+EndActionsScenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
+
+EndActionsScenario.hasMany(DeleteAction, { as: "delete-action" });
 
 Scenario.hasMany(ModuleText, { as: "module-text" });
 

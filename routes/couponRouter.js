@@ -5,9 +5,9 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 const router = new Router()
 
-router.post('/', CouponControllers.create)
-router.get('/', CouponControllers.getAll)
-router.delete('/', CouponControllers.delete)
+router.post('/',authMiddleware, CouponControllers.create)
+router.get('/',authMiddleware, CouponControllers.getAll)
+router.delete('/',authMiddleware, CouponControllers.delete)
 
 
 

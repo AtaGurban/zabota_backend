@@ -54,7 +54,7 @@ const start = async () => {
     await sequelize.sync();
 
     // httpsServer.listen(443, () => console.log(`server started on port 443`));
-    app.listen(500, ()=> console.log(`server started on port ${PORT}`))
+    app.listen(PORT, ()=> console.log(`server started on port ${PORT}`))
     const checkStatus = await Status.count()
     const checkUser = await User.count()
     const checkManager = await Manager.count()
