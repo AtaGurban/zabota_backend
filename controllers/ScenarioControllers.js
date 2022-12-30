@@ -14,6 +14,15 @@ const {
   createRecallAction,
   createChangeStatusAction,
   createDeleteAction,
+  createModuleText,
+  createModuleTextTitle,
+  createModuleSendLink,
+  createModuleSendCoupon,
+  createModuleReferralSpecialist,
+  createModuleRatingUser,
+  createModuleDropdown,
+  createModuleComment,
+  createModuleChekList,
 } = require("../service/createScenarioFuncTions");
 
 class ScenarioController {
@@ -121,6 +130,15 @@ class ScenarioController {
         reCallActionCount,
         changeStatusActionCount,
         deleteActionCount,
+        moduleTextCount,
+        moduleTextTitleCount,
+        moduleSendLinkCount,
+        moduleSendCouponCount,
+        moduleReferralSpecialistCount,
+        moduleRatingUserCount,
+        moduleDropdownCount,
+        moduleCommentCount,
+        moduleCheckListCount,
       } = req.body;
       if (
         !name ||
@@ -155,6 +173,55 @@ class ScenarioController {
       for (let i = 0; i < deleteActionCount; i++) {
         const deleteAction = req.body[`deleteAction[${i}]`];
         await createDeleteAction(deleteAction, scenario.id);
+      }
+
+      for (let i = 0; i < moduleTextCount; i++) {
+        const moduleText = req.body[`moduleText[${i}]`];
+        await createModuleText(moduleText, scenario.id);
+      }
+
+      for (let i = 0; i < moduleTextTitleCount; i++) {
+        const moduleTextTitle = req.body[`moduleTextTitle[${i}]`];
+        await createModuleTextTitle(moduleTextTitle, scenario.id);
+      }
+
+      for (let i = 0; i < moduleSendLinkCount; i++) {
+        const moduleSendLink = req.body[`moduleSendLink[${i}]`];
+        await createModuleSendLink(moduleSendLink, scenario.id);
+      }
+
+      for (let i = 0; i < moduleSendCouponCount; i++) {
+        const moduleSendCoupon = req.body[`moduleSendCoupon[${i}]`];
+        await createModuleSendCoupon(moduleSendCoupon, scenario.id);
+      }
+
+      for (let i = 0; i < moduleReferralSpecialistCount; i++) {
+        const moduleReferralSpecialist =
+          req.body[`moduleReferralSpecialist[${i}]`];
+        await createModuleReferralSpecialist(
+          moduleReferralSpecialist,
+          scenario.id
+        );
+      }
+
+      for (let i = 0; i < moduleRatingUserCount; i++) {
+        const moduleRatingUser = req.body[`moduleRatingUser[${i}]`];
+        await createModuleRatingUser(moduleRatingUser, scenario.id);
+      }
+
+      for (let i = 0; i < moduleDropdownCount; i++) {
+        const moduleDropdownCount = req.body[`moduleDropdown[${i}]`];
+        await createModuleDropdown(moduleDropdownCount, scenario.id);
+      }
+
+      for (let i = 0; i < moduleCommentCount; i++) {
+        const moduleComment = req.body[`moduleComment[${i}]`];
+        await createModuleComment(moduleComment, scenario.id);
+      }
+
+      for (let i = 0; i < moduleCheckListCount; i++) {
+        const moduleCheckList = req.body[`moduleCheckList[${i}]`];
+        await createModuleChekList(moduleCheckList, scenario.id);
       }
     } catch (error) {
       console.log(error);
