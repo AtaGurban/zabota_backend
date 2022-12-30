@@ -4,11 +4,17 @@ const {
   TypeScenario,
   EndActionsScenario,
   ModuleForScenario,
+  Scenario,
 } = require("../models/models");
 const uuid = require("uuid");
 const fs = require("fs");
 const path = require("path");
 const { Op } = require("sequelize");
+const {
+  createRecallAction,
+  createChangeStatusAction,
+  createDeleteAction,
+} = require("../service/createScenarioFuncTions");
 
 class ScenarioController {
   async createTypeScenario(req, res, next) {
@@ -108,29 +114,48 @@ class ScenarioController {
         fromDate,
         untilDate,
         firstNew,
-        completedAction,
-        notDoneAction,
-        notRingUpAction,
-        typeScenarioId,
-        reCallAction,
-        changeStatusAction,
-        deleteAction
+        completedActionId,
+        notDoneActionId,
+        notRingUpActionId,
+        typeScenarioIdId,
+        reCallActionCount,
+        changeStatusActionCount,
+        deleteActionCount,
       } = req.body;
-      if (!name || !color) {
+      if (
+        !name ||
+        !completedActionId ||
+        !notDoneActionId ||
+        !notRingUpActionId ||
+        !typeScenarioIdId
+      ) {
         return next(ApiError.badRequest("Непольные данные"));
       }
-      const number = (await TypeScenario.count()) + 1;
-      const checkTypeScenario = await TypeScenario.findOne({ where: { name } });
-      if (checkTypeScenario) {
-        return next(ApiError.badRequest("Такой тип сценарии уже существует"));
+      const scenario = await Scenario.create({
+        fromDate,
+        untilDate,
+        firstNew,
+        name,
+        completedActionId,
+        notDoneActionId,
+        notRingUpActionId,
+        typeScenarioIdId,
+      });
+
+      for (let i = 0; i < reCallActionCount; i++) {
+        const reCallAction = req.body[`reCallAction[${i}]`];
+        await createRecallAction(reCallAction, scenario.id);
       }
 
-      const typeScenario = await TypeScenario.create({
-        name,
-        color,
-        number,
-      });
-      return res.json(typeScenario);
+      for (let i = 0; i < changeStatusActionCount; i++) {
+        const changeStatusAction = req.body[`changeStatusAction[${i}]`];
+        await createChangeStatusAction(changeStatusAction, scenario.id);
+      }
+
+      for (let i = 0; i < deleteActionCount; i++) {
+        const deleteAction = req.body[`deleteAction[${i}]`];
+        await createDeleteAction(deleteAction, scenario.id);
+      }
     } catch (error) {
       console.log(error);
       return next(ApiError.badRequest(error));

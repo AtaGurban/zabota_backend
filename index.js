@@ -61,7 +61,7 @@ const start = async () => {
     const checkTypeScenario = await TypeScenario.count()
     const checkContacts = await Contact.count()
     const checkDeals = await Deal.count()
-    const checkEvents = await Event.count()
+    const checkEvents = await Event.count() 
     const checkEndActionsScenario = await EndActionsScenario.count()
     const checkModuleScenario = await ModuleForScenario.count()
     if (checkUser === 0){

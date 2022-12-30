@@ -131,9 +131,9 @@ const Scenario = sequelize.define("scenario", {
   untilDate: { type: DataTypes.DATE, defaultValue: null },
   firstNew: { type: DataTypes.BOOLEAN, defaultValue: null },
   name: { type: DataTypes.STRING, allowNull: false },
-  completedAction: { type: DataTypes.INTEGER, allowNull: false },
-  notDoneAction: { type: DataTypes.INTEGER, allowNull: false },
-  notRingUpAction: { type: DataTypes.INTEGER, allowNull: false },
+  completedActionId: { type: DataTypes.INTEGER, allowNull: false },
+  notDoneActionId: { type: DataTypes.INTEGER, allowNull: false },
+  notRingUpActionId: { type: DataTypes.INTEGER, allowNull: false },
 });
 
 const ModuleWithScenario = sequelize.define("module_with_scenario", {
@@ -212,7 +212,7 @@ const ReCallAction = sequelize.define("recall-action", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   unit: { type: DataTypes.STRING },
   count: { type: DataTypes.INTEGER },
-  actionNumber: { type: DataTypes.INTEGER },
+  // actionNumber: { type: DataTypes.INTEGER },
   time: { type: DataTypes.DATE },
 });
 
@@ -258,6 +258,12 @@ EndActionsScenario.hasMany(ReCallAction, { as: "recall-action" });
 EndActionsScenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
 
 EndActionsScenario.hasMany(DeleteAction, { as: "delete-action" });
+
+// EndActionsScenario.hasMany(Scenario, { as: "scenario", foreignKey:{name: 'completedAction'} });
+
+// EndActionsScenario.hasMany(Scenario, { as: "scenario", foreignKey:{name: 'notDoneAction'}  });
+
+// EndActionsScenario.hasMany(Scenario, { as: "scenario", foreignKey:{name: 'notRingUpAction'}  });
 
 Scenario.hasMany(ModuleText, { as: "module-text" });
 
