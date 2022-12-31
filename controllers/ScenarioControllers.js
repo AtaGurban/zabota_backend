@@ -43,7 +43,7 @@ class ScenarioController {
         color,
         number,
       });
-      return res.json(typeScenario);
+      return res.json(typeScenario); 
     } catch (error) {
       console.log(error);
       return next(ApiError.badRequest(error));
@@ -126,7 +126,7 @@ class ScenarioController {
         completedActionId,
         notDoneActionId,
         notRingUpActionId,
-        typeScenarioIdId,
+        typeScenarioId,
         reCallActionCount,
         changeStatusActionCount,
         deleteActionCount,
@@ -145,26 +145,30 @@ class ScenarioController {
         !completedActionId ||
         !notDoneActionId ||
         !notRingUpActionId ||
-        !typeScenarioIdId
+        !typeScenarioId
       ) {
         return next(ApiError.badRequest("Непольные данные"));
       }
+      if (firstNew !== null){
+        firstNew = firstNew === 'true' ? true : false
+      }
       const scenario = await Scenario.create({
-        fromDate,
-        untilDate,
+        fromDate: new Date(fromDate),
+        untilDate: new Date(untilDate),
         firstNew,
         name,
         completedActionId,
         notDoneActionId,
         notRingUpActionId,
-        typeScenarioIdId,
+        typeScenarioId,
       });
 
       for (let i = 0; i < reCallActionCount; i++) {
         const reCallAction = req.body[`reCallAction[${i}]`];
+        console.log(reCallAction);
         await createRecallAction(reCallAction, scenario.id);
       }
-
+ 
       for (let i = 0; i < changeStatusActionCount; i++) {
         const changeStatusAction = req.body[`changeStatusAction[${i}]`];
         await createChangeStatusAction(changeStatusAction, scenario.id);
@@ -176,7 +180,7 @@ class ScenarioController {
       }
 
       for (let i = 0; i < moduleTextCount; i++) {
-        const moduleText = req.body[`moduleText[${i}]`];
+        const moduleText = req.body[`moduleText[${i}]`]; 
         await createModuleText(moduleText, scenario.id);
       }
 
@@ -223,6 +227,7 @@ class ScenarioController {
         const moduleCheckList = req.body[`moduleCheckList[${i}]`];
         await createModuleChekList(moduleCheckList, scenario.id);
       }
+      return res.json(true)
     } catch (error) {
       console.log(error);
       return next(ApiError.badRequest(error));
@@ -231,3 +236,4 @@ class ScenarioController {
 }
 
 module.exports = new ScenarioController();
+ 

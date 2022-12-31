@@ -211,6 +211,7 @@ const HistoryHappedBirtDay = sequelize.define("history-happed-birthday", {
 const ReCallAction = sequelize.define("recall-action", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   unit: { type: DataTypes.STRING },
+  eventForAction: { type: DataTypes.STRING },
   count: { type: DataTypes.INTEGER },
   // actionNumber: { type: DataTypes.INTEGER },
   time: { type: DataTypes.DATE },
@@ -218,11 +219,13 @@ const ReCallAction = sequelize.define("recall-action", {
 
 const ChangeStatusAction = sequelize.define("change-status-action", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  eventForAction: { type: DataTypes.STRING },
   // typeScenarioId: { type: DataTypes.BIGINT },
 });
 
 const DeleteAction = sequelize.define("delete-action", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  eventForAction: { type: DataTypes.STRING },
   // typeScenarioId: { type: DataTypes.BIGINT },
 });
 
@@ -253,11 +256,11 @@ Scenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
 
 Scenario.hasMany(DeleteAction, { as: "delete-action" });
 
-EndActionsScenario.hasMany(ReCallAction, { as: "recall-action" });
+// EndActionsScenario.hasMany(ReCallAction, { as: "recall-action" });
 
-EndActionsScenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
+// EndActionsScenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
 
-EndActionsScenario.hasMany(DeleteAction, { as: "delete-action" });
+// EndActionsScenario.hasMany(DeleteAction, { as: "delete-action" });
 
 // EndActionsScenario.hasMany(Scenario, { as: "scenario", foreignKey:{name: 'completedAction'} });
 

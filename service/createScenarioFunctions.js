@@ -17,22 +17,22 @@ const {
 
 const createRecallAction = async (item, scenarioId) => {
   const parsedObj = JSON.parse(item);
-  const { unit, count, time, endActionsScenarioId } = parsedObj;
+  const { unit, count, time, eventForAction} = parsedObj;
   const recallActionItem = await ReCallAction.create({
     unit,
     count,
     time,
-    endActionsScenarioId,
+    eventForAction,
     scenarioId,
-  });
+  }); 
   return recallActionItem;
 };
 
 const createChangeStatusAction = async (item, scenarioId) => {
   const parsedObj = JSON.parse(item);
-  const { endActionsScenarioId, typeScenarioId } = parsedObj;
+  const { eventForAction, typeScenarioId } = parsedObj;
   const changeStatusActionItem = await ChangeStatus.create({
-    endActionsScenarioId,
+    eventForAction,
     scenarioId,
     typeScenarioId,
   });
@@ -41,9 +41,9 @@ const createChangeStatusAction = async (item, scenarioId) => {
 
 const createDeleteAction = async (item, scenarioId) => {
   const parsedObj = JSON.parse(item);
-  const { endActionsScenarioId } = parsedObj;
+  const { eventForAction } = parsedObj;
   const deleteActionItem = await DeleteAction.create({
-    endActionsScenarioId,
+    eventForAction,
     scenarioId,
   });
   return deleteActionItem;
@@ -71,7 +71,7 @@ const createModuleSendLink = async (item, scenarioId) => {
   const parsedObj = JSON.parse(item);
   const { number } = parsedObj;
   const moduleSendLinkItem = await ModuleSendLink.create({
-    number, scenarioId
+    number, scenarioId 
   })
   return moduleSendLinkItem
 };
