@@ -180,7 +180,7 @@ const ModuleDropdown = sequelize.define("module_dropdown", {
 const ModuleDropdownItems = sequelize.define("module_dropdown-items", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   number: { type: DataTypes.INTEGER, allowNull: false },
-  item: { type: DataTypes.STRING, allowNull: false },
+  itemName: { type: DataTypes.STRING, allowNull: false },
 });
 
 const ModuleCheckListItems = sequelize.define("module_check_list_items", {
