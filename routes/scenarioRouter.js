@@ -13,6 +13,7 @@ router.get('/end-actions', authMiddleware, ScenarioControllers.getEndActionsScen
 router.get('/module', authMiddleware, ScenarioControllers.getModuleScenario)
 // router.post('/', authMiddleware, ScenarioControllers.createScenario)
 router.post('/', ScenarioControllers.createScenario)
+router.get('/', ScenarioControllers.getScenario)
 
 
 

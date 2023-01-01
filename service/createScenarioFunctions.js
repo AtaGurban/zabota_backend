@@ -1,7 +1,6 @@
 const {
   ReCallAction,
   DeleteAction,
-  ChangeStatus,
   ModuleText,
   ModuleTextWithTitle,
   ModuleSendLink,
@@ -13,6 +12,7 @@ const {
   ModuleDropdownItems,
   ModuleCheckList,
   ModuleCheckListItems,
+  ChangeStatusAction,
 } = require("../models/models");
 
 const createRecallAction = async (item, scenarioId) => {
@@ -31,7 +31,7 @@ const createRecallAction = async (item, scenarioId) => {
 const createChangeStatusAction = async (item, scenarioId) => {
   const parsedObj = JSON.parse(item);
   const { eventForAction, typeScenarioId } = parsedObj;
-  const changeStatusActionItem = await ChangeStatus.create({
+  const changeStatusActionItem = await ChangeStatusAction.create({
     eventForAction,
     scenarioId,
     typeScenarioId,

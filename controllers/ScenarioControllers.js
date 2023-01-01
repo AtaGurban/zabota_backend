@@ -1,14 +1,24 @@
 const ApiError = require("../error/ApiError");
 const {
-  Сoupon,
   TypeScenario,
   EndActionsScenario,
   ModuleForScenario,
   Scenario,
+  DeleteAction,
+  ChangeStatusAction,
+  ReCallAction,
+  ModuleText,
+  ModuleTextWithTitle,
+  ModuleComment,
+  ModuleSendLink,
+  ModuleReferralSpecialist,
+  ModuleRatingUser,
+  ModuleSendCoupon,
+  ModuleDropdown,
+  ModuleDropdownItems,
+  ModuleCheckList,
+  ModuleCheckListItems,
 } = require("../models/models");
-const uuid = require("uuid");
-const fs = require("fs");
-const path = require("path");
 const { Op } = require("sequelize");
 const {
   createRecallAction,
@@ -43,7 +53,7 @@ class ScenarioController {
         color,
         number,
       });
-      return res.json(typeScenario); 
+      return res.json(typeScenario);
     } catch (error) {
       console.log(error);
       return next(ApiError.badRequest(error));
@@ -149,8 +159,8 @@ class ScenarioController {
       ) {
         return next(ApiError.badRequest("Непольные данные"));
       }
-      if (firstNew !== null){
-        firstNew = firstNew === 'true' ? true : false
+      if (firstNew !== null) {
+        firstNew = firstNew === "true" ? true : false;
       }
       const scenario = await Scenario.create({
         fromDate: new Date(fromDate),
@@ -168,7 +178,7 @@ class ScenarioController {
         console.log(reCallAction);
         await createRecallAction(reCallAction, scenario.id);
       }
- 
+
       for (let i = 0; i < changeStatusActionCount; i++) {
         const changeStatusAction = req.body[`changeStatusAction[${i}]`];
         await createChangeStatusAction(changeStatusAction, scenario.id);
@@ -180,7 +190,7 @@ class ScenarioController {
       }
 
       for (let i = 0; i < moduleTextCount; i++) {
-        const moduleText = req.body[`moduleText[${i}]`]; 
+        const moduleText = req.body[`moduleText[${i}]`];
         await createModuleText(moduleText, scenario.id);
       }
 
@@ -227,7 +237,53 @@ class ScenarioController {
         const moduleCheckList = req.body[`moduleCheckList[${i}]`];
         await createModuleChekList(moduleCheckList, scenario.id);
       }
-      return res.json(true)
+      return res.json(true);
+    } catch (error) {
+      console.log(error);
+      return next(ApiError.badRequest(error));
+    }
+  }
+  async getScenario(req, res, next) {
+    try {
+      const { typeId } = req.query;
+      let result;
+      if (typeId) {
+        result = await Scenario.findAll({
+          where:{typeScenarioId: typeId},
+          include: [
+            { model: DeleteAction, as: "delete-action" },
+            { model: ChangeStatusAction, as: "change-status-action" },
+            { model: ReCallAction, as: "recall-action" },
+            { model: ModuleText, as: "module-text" },
+            { model: ModuleTextWithTitle, as: "module-text-title" },
+            { model: ModuleComment, as: "module-comment" },
+            { model: ModuleSendLink, as: "module-send-link" },
+            { model: ModuleReferralSpecialist, as: "module-referral-specialist" },
+            { model: ModuleRatingUser, as: "module-rating-user" },
+            { model: ModuleSendCoupon, as: "module-send-coupon" },
+            { model: ModuleDropdown, as: "module-dropdown", include: {model: ModuleDropdownItems, as: 'module-dropdown-items'} },
+            { model: ModuleCheckList, as: "module-check-list", include: {model: ModuleCheckListItems, as: 'module-check-list-items'} },
+          ],
+        });
+      } else {
+        result = await Scenario.findAll({
+          include: [
+            { model: DeleteAction, as: "delete-action" },
+            { model: ChangeStatusAction, as: "change-status-action" },
+            { model: ReCallAction, as: "recall-action" },
+            { model: ModuleText, as: "module-text" },
+            { model: ModuleTextWithTitle, as: "module-text-title" },
+            { model: ModuleComment, as: "module-comment" },
+            { model: ModuleSendLink, as: "module-send-link" },
+            { model: ModuleReferralSpecialist, as: "module-referral-specialist" },
+            { model: ModuleRatingUser, as: "module-rating-user" },
+            { model: ModuleSendCoupon, as: "module-send-coupon" },
+            { model: ModuleDropdown, as: "module-dropdown", include: {model: ModuleDropdownItems, as: 'module-dropdown-items'} },
+            { model: ModuleCheckList, as: "module-check-list", include: {model: ModuleCheckListItems, as: 'module-check-list-items'} },
+          ],
+        });
+      }
+      return res.json(result); 
     } catch (error) {
       console.log(error);
       return next(ApiError.badRequest(error));
@@ -236,4 +292,3 @@ class ScenarioController {
 }
 
 module.exports = new ScenarioController();
- 

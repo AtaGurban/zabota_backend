@@ -362,7 +362,7 @@ module.exports = {
   Contact,
   ModuleComment,
   Scenario,
-  ChangeStatus: ChangeStatusAction,
+  ChangeStatusAction,
   Deal,
   ModuleText,
   TypeScenario,
