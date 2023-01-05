@@ -36,6 +36,8 @@ const {
   createModuleChekList,
   changeTypeScenario,
   deleteScenarioBytypeScenarioId,
+  deleteActionScenario,
+  deleteModuleByScenarioId,
 } = require("../service/createScenarioFuncTions");
 
 class ScenarioController {
@@ -304,6 +306,31 @@ class ScenarioController {
         });
       }
       return res.json(result); 
+    } catch (error) {
+      console.log(error);
+      return next(ApiError.badRequest(error));
+    }
+  }
+  async deleteScenario(req, res, next) {
+    try {
+      const { id } = req.query;
+      const scenario = await Scenario.findOne({where:{id}})
+      if (scenario){
+        await deleteActionScenario(ChangeStatusAction, scenario.id)
+        await deleteActionScenario(ReCallAction, scenario.id)
+        await deleteActionScenario(DeleteAction, scenario.id)
+        await deleteModuleByScenarioId(ModuleCheckList, scenario.id)
+        await deleteModuleByScenarioId(ModuleComment, scenario.id)
+        await deleteModuleByScenarioId(ModuleDropdown, scenario.id)
+        await deleteModuleByScenarioId(ModuleRatingUser, scenario.id)
+        await deleteModuleByScenarioId(ModuleReferralSpecialist, scenario.id)
+        await deleteModuleByScenarioId(ModuleSendCoupon, scenario.id)
+        await deleteModuleByScenarioId(ModuleSendLink, scenario.id)
+        await deleteModuleByScenarioId(ModuleText, scenario.id)
+        await deleteModuleByScenarioId(ModuleTextWithTitle, scenario.id)
+        await scenario.destroy()
+      }
+      return res.json(scenario); 
     } catch (error) {
       console.log(error);
       return next(ApiError.badRequest(error));

@@ -14,6 +14,7 @@ router.get('/module', authMiddleware, ScenarioControllers.getModuleScenario)
 // router.post('/', authMiddleware, ScenarioControllers.createScenario)
 router.post('/', ScenarioControllers.createScenario)
 router.get('/', ScenarioControllers.getScenario)
+router.delete('/', ScenarioControllers.deleteScenario)
 
 
 
