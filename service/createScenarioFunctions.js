@@ -13,6 +13,8 @@ const {
   ModuleCheckList,
   ModuleCheckListItems,
   ChangeStatusAction,
+  Scenario,
+  Deal,
 } = require("../models/models");
 
 const createRecallAction = async (item, scenarioId) => {
@@ -143,6 +145,80 @@ const createModuleChekList = async (item, scenarioId) => {
   return moduleCheckListItem
 };
 
+const deleteActionScenario = async (model, scenarioId)=>{
+  if (model && id){
+    const deletedItem = await model.findAll({where:{scenarioId}})
+    if (deletedItem.length > 0){
+      deletedItem.map(async (i)=>{
+        await i.destroy()
+      })
+    }
+  }
+}
+
+const deleteModuleByScenarioId = async(scenarioId, model)=>{
+  const modules = await model.findAll({where:{scenarioId}})
+  if (modules.length > 0){
+    modules.map( async(i)=> {
+      if (model === ModuleDropdown){
+        await deleteDropdownItems(i.id)
+      } else if (model === ModuleCheckList){
+        await deleteCheckListItems(i.id)
+      }
+      await i.destroy()
+    })
+  }
+}
+
+const deleteModuleById = async(id, model)=>{
+  const module = await model.findOne({where:{id}})
+  if (module){
+    await module.destroy()
+  }
+}
+
+const deleteDropdownItems = async (moduleDropdownId)=>{
+  if (moduleDropdownId){
+    const allItems = await ModuleDropdownItems.findAll({where:{moduleDropdownId}})
+    allItems.map(async (i)=> await i.destroy())
+  }
+}
+
+const deleteCheckListItems = async (moduleCheckListId )=>{
+  if (moduleCheckListId){
+    const allItems = await ModuleCheckListItems.findAll({where:{moduleCheckListId}})
+    allItems.map(async (i)=> await i.destroy())
+  }
+}
+
+const deleteScenarioBytypeScenarioId = async (typeScenarioId)=>{
+  if (typeScenarioId){
+    const allScenarios = await Scenario.findAll({where:{typeScenarioId}})
+    allScenarios.map(async (i)=> {
+      await deleteActionScenario(ChangeStatusAction, i.id)
+      await deleteActionScenario(ReCallAction, i.id)
+      await deleteActionScenario(DeleteAction, i.id)
+      await deleteModuleByScenarioId(ModuleCheckList, i.id)
+      await deleteModuleByScenarioId(ModuleComment, i.id)
+      await deleteModuleByScenarioId(ModuleDropdown, i.id)
+      await deleteModuleByScenarioId(ModuleRatingUser, i.id)
+      await deleteModuleByScenarioId(ModuleReferralSpecialist, i.id)
+      await deleteModuleByScenarioId(ModuleSendCoupon, i.id)
+      await deleteModuleByScenarioId(ModuleSendLink, i.id)
+      await deleteModuleByScenarioId(ModuleText, i.id)
+      await deleteModuleByScenarioId(ModuleTextWithTitle, i.id)
+      await i.destroy()
+    })
+  }
+}
+
+const changeTypeScenario = async (id, typeScenario)=>{
+  const deals = await Deal.findAll({where:{typeScenarioId: id}})
+  deals.map( async(i)=>{
+    await Deal.update({typeScenarioId: typeScenario}, {where: {id: i.id}})
+  })
+}
+
 module.exports = {
   createRecallAction,
   createChangeStatusAction,
@@ -156,4 +232,9 @@ module.exports = {
   createModuleSendCoupon,
   createModuleSendLink,
   createModuleText,
+  deleteActionScenario,
+  deleteModuleByScenarioId,
+  deleteModuleById,
+  deleteScenarioBytypeScenarioId,
+  changeTypeScenario
 };

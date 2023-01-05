@@ -18,6 +18,7 @@ const {
   ModuleDropdownItems,
   ModuleCheckList,
   ModuleCheckListItems,
+  ScenarioPrioritet,
 } = require("../models/models");
 const { Op } = require("sequelize");
 const {
@@ -33,6 +34,8 @@ const {
   createModuleDropdown,
   createModuleComment,
   createModuleChekList,
+  changeTypeScenario,
+  deleteScenarioBytypeScenarioId,
 } = require("../service/createScenarioFuncTions");
 
 class ScenarioController {
@@ -70,9 +73,14 @@ class ScenarioController {
   }
   async deleteTypeScenario(req, res, next) {
     try {
-      const { id } = req.query;
+      const { id, typeScenarioId } = req.query;
       const typeScenario = await TypeScenario.findOne({ where: { id } });
+      if (typeScenario && typeScenarioId) {
+        await changeTypeScenario(id, typeScenarioId)
+      }
       if (typeScenario) {
+        await deleteScenarioBytypeScenarioId(id)
+        await typeScenario.destroy()
       }
       return res.json(typeScenario);
     } catch (error) {
@@ -173,9 +181,19 @@ class ScenarioController {
         typeScenarioId,
       });
 
+      for (let i = 1; i < 8; i++) {
+        const prioritetNumber = await ScenarioPrioritet.findOne({where:{number: i}});
+        if (!prioritetNumber){
+          await ScenarioPrioritet.create({
+            number: i,
+            scenarioId: scenario.id
+          }) 
+          break
+        }
+      }
+
       for (let i = 0; i < reCallActionCount; i++) {
         const reCallAction = req.body[`reCallAction[${i}]`];
-        console.log(reCallAction);
         await createRecallAction(reCallAction, scenario.id);
       }
 
@@ -251,6 +269,7 @@ class ScenarioController {
         result = await Scenario.findAll({
           where:{typeScenarioId: typeId},
           include: [
+            { model: ScenarioPrioritet, as: "prioritet" },
             { model: DeleteAction, as: "delete-action" },
             { model: ChangeStatusAction, as: "change-status-action" },
             { model: ReCallAction, as: "recall-action" },
@@ -268,6 +287,7 @@ class ScenarioController {
       } else {
         result = await Scenario.findAll({
           include: [
+            { model: ScenarioPrioritet, as: "prioritet" },
             { model: DeleteAction, as: "delete-action" },
             { model: ChangeStatusAction, as: "change-status-action" },
             { model: ReCallAction, as: "recall-action" },

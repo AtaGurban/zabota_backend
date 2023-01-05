@@ -208,6 +208,11 @@ const HistoryHappedBirtDay = sequelize.define("history-happed-birthday", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
+const ScenarioPrioritet = sequelize.define("scenario-prioritet", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+  number: { type: DataTypes.INTEGER, allowNull: false, unique: true },
+});
+
 const ReCallAction = sequelize.define("recall-action", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
   unit: { type: DataTypes.STRING },
@@ -253,8 +258,10 @@ Scenario.belongsTo(TypeScenario, { as: "type-scenario" });
 Scenario.hasMany(ReCallAction, { as: "recall-action" });
  
 Scenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
-
+ 
 Scenario.hasMany(DeleteAction, { as: "delete-action" });
+
+Scenario.hasOne(ScenarioPrioritet, { as: "prioritet", foreignKey: {name: 'scenarioId'} });
 
 // EndActionsScenario.hasMany(ReCallAction, { as: "recall-action" });
 
@@ -354,6 +361,7 @@ module.exports = {
   ModuleReferralSpecialist,
   ModuleRatingUser,
   ModuleSendCoupon,
+  ScenarioPrioritet,
   EventHistory,
   ReCallAction,
   ModuleWithScenario,
