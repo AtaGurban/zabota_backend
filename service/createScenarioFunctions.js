@@ -146,7 +146,8 @@ const createModuleChekList = async (item, scenarioId) => {
 };
 
 const deleteActionScenario = async (model, scenarioId)=>{
-  if (model && id){
+  console.log(model);
+  if (model && scenarioId){
     const deletedItem = await model.findAll({where:{scenarioId}})
     if (deletedItem.length > 0){
       deletedItem.map(async (i)=>{
@@ -156,7 +157,8 @@ const deleteActionScenario = async (model, scenarioId)=>{
   }
 }
 
-const deleteModuleByScenarioId = async(scenarioId, model)=>{
+const deleteModuleByScenarioId = async(model, scenarioId)=>{
+  console.log(model);
   const modules = await model.findAll({where:{scenarioId}})
   if (modules.length > 0){
     modules.map( async(i)=> {
@@ -170,7 +172,7 @@ const deleteModuleByScenarioId = async(scenarioId, model)=>{
   }
 }
 
-const deleteModuleById = async(id, model)=>{
+const deleteModuleById = async(model, id)=>{
   const module = await model.findOne({where:{id}})
   if (module){
     await module.destroy()
