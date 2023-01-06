@@ -171,7 +171,6 @@ class ScenarioController {
         !notRingUpActionId ||
         !notDoneActionId ||
         !completedActionId ||
-        !id ||
         !reCallActionCount ||
         !changeStatusActionCount ||
         !deleteActionCount ||
