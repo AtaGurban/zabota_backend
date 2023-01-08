@@ -11,12 +11,11 @@ router.delete('/type', ScenarioControllers.deleteTypeScenario)
 router.put('/type', authMiddleware, ScenarioControllers.updateTypeScenario)
 router.get('/end-actions', authMiddleware, ScenarioControllers.getEndActionsScenario)
 router.get('/module', authMiddleware, ScenarioControllers.getModuleScenario)
-// router.post('/', authMiddleware, ScenarioControllers.createScenario)
-router.post('/', ScenarioControllers.createScenario)
-router.put('/', ScenarioControllers.updateScenario)
-router.get('/', ScenarioControllers.getScenario)
-router.put('/prioritet', ScenarioControllers.updatePrioritet)
-router.delete('/', ScenarioControllers.deleteScenario)
+router.post('/', authMiddleware, ScenarioControllers.createScenario)
+router.put('/', authMiddleware, ScenarioControllers.updateScenario)
+router.get('/', authMiddleware, ScenarioControllers.getScenario)
+router.put('/prioritet', authMiddleware, ScenarioControllers.updatePrioritet)
+router.delete('/', authMiddleware, ScenarioControllers.deleteScenario)
 
 
 

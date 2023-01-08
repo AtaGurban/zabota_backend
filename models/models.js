@@ -60,6 +60,7 @@ const Deal = sequelize.define("deal", {
   abc_status: { type: DataTypes.STRING },
   complete: { type: DataTypes.BOOLEAN },
   deleted: { type: DataTypes.BOOLEAN },
+  visible: { type: DataTypes.BOOLEAN },
   deletedOfOurDB: { type: DataTypes.BOOLEAN, defaultValue: false },
   unvisibleUntilDate: { type: DataTypes.DATE, defaultValue: null },
 });

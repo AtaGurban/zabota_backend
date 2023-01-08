@@ -30,6 +30,7 @@ const { getManager } = require("./service/getManager");
 const { getContacts } = require("./service/getContacts");
 const { getDeals } = require("./service/getDeals");
 const { events, endActionsScenarioList, moduleScenarioList, typeScenarioList } = require("./utils/constData");
+const { checkVisibleDeal } = require("./service/checkDealsVisible");
 const app = express();
 
 
@@ -117,6 +118,9 @@ const start = async () => {
     setInterval(async()=>{
       await getDeals('update')
     }, 24 * 60 * 60 * 1000)
+    setInterval(async()=>{
+      await checkVisibleDeal()
+    }, 12 * 60 * 60 * 1000)
   } catch (error) { 
     console.log(error);  
   }  
