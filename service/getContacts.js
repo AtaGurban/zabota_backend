@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const { Contact } = require("../models/models");
+const { Contact, Deal } = require("../models/models");
 
 const url = 'https://nerielt.app/api/contacts?token=709B0D21504685B87D27ADD360FA12E6&full=1'
 
@@ -10,6 +10,7 @@ const getContacts = async(state)=>{
             for (const key in data.data) {
                 if (Object.hasOwnProperty.call(data.data, key)) {
                     const i = data.data[key];
+                    const deal = await Deal.findOne({where:{client_id: i.id}})
                     await Contact.create({
                         contact_id: i.id,
                         contact_name: i.name,
@@ -18,7 +19,8 @@ const getContacts = async(state)=>{
                         contact_email: i.email,
                         contact_type: i.contact_type,
                         birthdate: i.birthdate?.date, 
-                        manager_id: i.manager_id
+                        manager_id: i.manager_id,
+                        dealId: deal?.id
                     })
                 }
             }
@@ -28,6 +30,7 @@ const getContacts = async(state)=>{
                     const i = data.data[key];
                     const checkOneContact = await Contact.findOne({ where: {contact_id: i.id}})
                     if (!checkOneContact){
+                        const deal = await Deal.findOne({where:{client_id: i.id}})
                         await Contact.create({
                             contact_id: i.id,
                             contact_name: i.name,
@@ -36,7 +39,8 @@ const getContacts = async(state)=>{
                             contact_email: i.email,
                             contact_type: i.contact_type,
                             birthdate: i.birthdate?.date, 
-                            manager_id: i.manager_id
+                            manager_id: i.manager_id,
+                            dealId: deal?.id
                         })
                     }
                 }

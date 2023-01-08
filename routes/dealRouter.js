@@ -5,10 +5,12 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 const router = new Router()
 
-// router.get('/',authMiddleware, DealControllers.getAll)
+// router.get('/', authMiddleware, DealControllers.getAll)
 router.get('/', DealControllers.getAll)
-router.get('/search',authMiddleware, DealControllers.getSearch)
-router.get('/birthday',authMiddleware, DealControllers.getBirthday)
+router.get('/search', DealControllers.getSearch)
+// router.get('/search',authMiddleware, DealControllers.getSearch)
+// router.get('/birthday',authMiddleware, DealControllers.getBirthday)
+router.get('/birthday', DealControllers.getBirthday)
 
 
 

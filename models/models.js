@@ -263,6 +263,7 @@ Scenario.hasMany(ChangeStatusAction, { as: "change-status-action" });
 Scenario.hasMany(DeleteAction, { as: "delete-action" });
 
 Scenario.hasOne(ScenarioPrioritet, { as: "prioritet", foreignKey: {name: 'scenarioId'} });
+Deal.hasOne(Contact, { as: "contact", foreignKey: {name: 'dealId'} });
 
 // EndActionsScenario.hasMany(ReCallAction, { as: "recall-action" });
 
