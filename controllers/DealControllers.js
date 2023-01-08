@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError");
-const { TypeScenario, Deal } = require("../models/models");
+const { TypeScenario, Deal, Contact } = require("../models/models");
 
 class DealController {
     async getAll(req, res, next) { 
@@ -9,9 +9,17 @@ class DealController {
             const offset = (page - 1) * limit;
             let result = {}
             const typeScenario = await TypeScenario.findAll()
-            typeScenario.map(async (i)=>{
-                result[`${i.id}`] = await Deal.findAndCountAll({ offset, limit, where:{typeScenarioId: i.id}, include:{model} })
-            })
+            for (let i = 0; i < typeScenario.length; i++) {
+                const element = typeScenario[i];
+                result[`${element.id}`] = await Deal.findAndCountAll({ offset, limit, where:{typeScenarioId: element.id} })
+                console.log(result[`${element.id}`].rows.length);
+                for (let j = 0; j < result[`${element.id}`].rows.length; j++) {
+                    const elementTwo = result[`${element.id}`].rows[j];
+                    elementTwo.contact = await Contact.findOne({where:{contact_id: elementTwo?.client_id}})
+                    console.log(elementTwo);
+                }
+                
+            }
             return res.json(result)
         } catch (error) {
             console.log(error);
@@ -30,9 +38,10 @@ class DealController {
             const offset = (page - 1) * limit;
             let result = {}
             const typeScenario = await TypeScenario.findAll()
-            typeScenario.map(async (i)=>{
-                result[`${i.id}`] = await Deal.findAndCountAll({ offset, limit, where:{typeScenarioId: i.id} })
-            })
+            for (let i = 0; i < typeScenario.length; i++) {
+                const element = typeScenario[i];
+                result[`${element.id}`] = await Deal.findAndCountAll({ offset, limit, where:{typeScenarioId: element.id} })
+            }
             return res.json(result)
         } catch (error) {
             console.log(error);

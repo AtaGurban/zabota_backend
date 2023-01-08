@@ -5,7 +5,7 @@ const checkVisibleDeal = async () => {
   const dealsForCheck = await Deal.findAll({
     where: {
       unvisibleUntilDate: {
-        [Op.not]: null,
+        [Op.not]: null, 
       },
     },
   });
