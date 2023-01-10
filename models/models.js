@@ -327,16 +327,23 @@ Contact.hasMany(EventHistory, { as: "history" });
 
 EventHistory.belongsTo(Contact, { as: "contact" });
 
-Contact.hasMany(Call, { as: "call" }); 
+Deal.hasMany(Call, { as: "call" }); 
+Call.belongsTo(Deal, { as: "deal" });
 
-Contact.hasMany(HistoryHappedBirtDay, { as: "birthday-history" });
+Deal.hasMany(HistoryHappedBirtDay, { as: "birthday-history" });
+HistoryHappedBirtDay.belongsTo(Deal, { as: "deal" });
 
-Contact.hasMany(HistorySendCoupon, { as: "coupon-history" });
+Deal.hasMany(HistorySendCoupon, { as: "coupon-history" });
+HistorySendCoupon.belongsTo(Deal, { as: "deal" });
+ 
+Сoupon.hasMany(HistorySendCoupon, { as: "coupon-history" });
+HistorySendCoupon.belongsTo(Сoupon, { as: "coupon" });
 
 Deal.hasMany(HistoryReferralToAnotherSpecialist, { as: "referral-history" });
+HistoryReferralToAnotherSpecialist.belongsTo(Deal, { as: "deal" });
 
 ModuleForScenario.belongsToMany(Scenario, {
-  through: ModuleWithScenario,
+  through: ModuleWithScenario, 
   as: "scenario",
 });
 Scenario.belongsToMany(ModuleForScenario, {

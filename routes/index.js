@@ -6,6 +6,7 @@ const efficiencyUserRouter = require('./efficiencyUserRouter')
 const couponRouter = require('./couponRouter')
 const scenarioRouter = require('./scenarioRouter')
 const dealRouter = require('./dealRouter')
+const historyRouter = require('./historyRouter')
 
 
 
@@ -16,6 +17,7 @@ router.use('/efficiency-user', efficiencyUserRouter)
 router.use('/coupon', couponRouter)
 router.use('/scenario', scenarioRouter)
 router.use('/deals', dealRouter)
+router.use('/history', historyRouter)
 
 
 

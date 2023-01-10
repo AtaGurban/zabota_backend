@@ -1,10 +1,13 @@
 const { Op } = require("sequelize");
 const ApiError = require("../error/ApiError");
+const jwt_decode = require('jwt-decode')
 const { TypeScenario, Deal, Contact } = require("../models/models");
 
 class DealController {
   async getAll(req, res, next) {
     try {
+      const token = req.headers.authorization.split(' ')[1]
+      const { id } = jwt_decode(token); 
       const page = req?.query?.page || 1;
       const limit = req?.query?.limit || 25;
       const offset = (page - 1) * limit;
@@ -15,7 +18,7 @@ class DealController {
         result[`${element.id}`] = await Deal.findAndCountAll({
           offset,
           limit,
-          where: { typeScenarioId: element.id },
+          where: { typeScenarioId: element.id, userId: {[Op.or] : [null, id]} },
           include: { model: Contact, as: "contact" },
         });
       }
@@ -35,7 +38,7 @@ class DealController {
       for (let i = 0; i < typeScenario.length; i++) {
         const element = typeScenario[i];
         result[`${element.id}`] = await Deal.findAll({
-          where: { typeScenarioId: element.id },
+          where: { typeScenarioId: element.id, userId: null },
           include: { model: Contact, as: "contact" },
         });
       }
@@ -80,7 +83,7 @@ class DealController {
           result[`${element.id}`] = await Deal.findAndCountAll({
             offset,
             limit,
-            where: { typeScenarioId: element.id },
+            where: { typeScenarioId: element.id, userId: null },
             include: { model: Contact, as: "contact", where: { contact_name: { [Op.like]: `%${query}%` } }, },
           });
         }
