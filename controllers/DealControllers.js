@@ -18,7 +18,7 @@ class DealController {
         result[`${element.id}`] = await Deal.findAndCountAll({
           offset,
           limit,
-          where: { typeScenarioId: element.id, userId: {[Op.or] : [null, id]} },
+          where: { typeScenarioId: element.id, userId: null },
           include: { model: Contact, as: "contact" },
         });
       }

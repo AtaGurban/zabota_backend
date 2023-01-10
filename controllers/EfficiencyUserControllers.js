@@ -7,6 +7,7 @@ const {
   HistoryHappedBirtDay,
   HistoryReferralToAnotherSpecialist,
   HistorySendCoupon,
+  HistoryRatingManager,
 } = require('../models/models')
 
 class getEfficiencyUsersController {
@@ -25,6 +26,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -39,7 +41,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = element['birthday-history'].length || 0
-          const filledEstimates = 0
+          const filledEstimates = element['rating-history'].length || 0
           const linkToRegistration = 0
           const countDeals = element?.deal?.length || 0
           const countSendCoupons = element['coupon-history'].length || 0
@@ -80,6 +82,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -97,7 +100,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
-          const filledEstimates = 0
+          const filledEstimates = (element['rating-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
@@ -146,6 +149,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -163,7 +167,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
-          const filledEstimates = 0
+          const filledEstimates = (element['rating-history'].filter(j => {return +new Date(j.updatedAt) > +new Date(dateMin)})).length
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
@@ -211,6 +215,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -228,7 +233,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
-          const filledEstimates = 0
+          const filledEstimates = (element['rating-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
@@ -276,6 +281,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -298,7 +304,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = (element['birthday-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
-          const filledEstimates = 0
+          const filledEstimates = (element['rating-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
@@ -350,6 +356,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -372,7 +379,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = (element['birthday-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
-          const filledEstimates = 0
+          const filledEstimates = (element['rating-history'].filter(j => {return (+new Date(j.updatedAt) < +new Date(dateMax)) && (+new Date(j.updatedAt) > +new Date(dateMin))})).length
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
@@ -424,6 +431,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -441,7 +449,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = (element['birthday-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
-          const filledEstimates = 0
+          const filledEstimates = (element['rating-history'].filter(j => {return +new Date(j.updatedAt) < +new Date(dateMax)})).length
           const linkToRegistration = 0
           const countDeals =
             (element?.deal?.filter((j) => {
@@ -490,6 +498,7 @@ class getEfficiencyUsersController {
               as: 'referral-history',
             },
             { model: HistorySendCoupon, as: 'coupon-history' },
+            { model: HistoryRatingManager, as: 'rating-history' },
           ],
         })
         let now = new Date()
@@ -504,7 +513,7 @@ class getEfficiencyUsersController {
           const errorCallPrecent =
             outCallsCount > 0 ? (errorCallsCount / outCallsCount) * 100 : 0
           const happedBirtDay = element['birthday-history'].length || 0
-          const filledEstimates = 0
+          const filledEstimates = element['rating-history'].length || 0
           const linkToRegistration = 0
           const countDeals = element?.deal?.length || 0
           const countSendCoupons = element['coupon-history'].length || 0

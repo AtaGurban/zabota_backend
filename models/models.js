@@ -102,12 +102,12 @@ const Call = sequelize.define("call", {
   status: { type: DataTypes.STRING },
 });
 
-const Rating = sequelize.define("rating", {
-  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
-  rate: { type: DataTypes.FLOAT, defaultValue: 0 },
-  type: { type: DataTypes.STRING, defaultValue: "" },
-  count: { type: DataTypes.BIGINT, defaultValue: 0 },
-});
+// const Rating = sequelize.define("rating", {
+//   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+//   rate: { type: DataTypes.FLOAT, defaultValue: 0 },
+//   type: { type: DataTypes.STRING, defaultValue: "" },
+//   count: { type: DataTypes.BIGINT, defaultValue: 0 },
+// });
 
 const TypeScenario = sequelize.define("type_scenario", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
@@ -239,6 +239,10 @@ const HistorySendCoupon = sequelize.define("history-send-coupon", {
   id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
 });
 
+const HistoryRatingManager = sequelize.define("history-rating-manager", {
+  id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
+});
+
 const HistoryReferralToAnotherSpecialist = sequelize.define( 
   "history-referral-to-specialist",
   {
@@ -247,7 +251,7 @@ const HistoryReferralToAnotherSpecialist = sequelize.define(
   }
 );
 
-Manager.hasMany(Rating, { as: "rating" });
+Manager.hasMany(HistoryRatingManager, { as: "history-rating" });
 
 User.hasMany(Deal, { as: "deal" });
 
@@ -315,6 +319,8 @@ User.hasMany(HistoryReferralToAnotherSpecialist, { as: "referral-history" });
 
 User.hasMany(HistorySendCoupon, { as: "coupon-history" });
 
+User.hasMany(HistoryRatingManager, { as: "rating-history" });
+
 User.hasMany(EventHistory, { as: "history" });
 EventHistory.belongsTo(User, { as: "user" });
 
@@ -341,6 +347,9 @@ HistorySendCoupon.belongsTo(Сoupon, { as: "coupon" });
 
 Deal.hasMany(HistoryReferralToAnotherSpecialist, { as: "referral-history" });
 HistoryReferralToAnotherSpecialist.belongsTo(Deal, { as: "deal" });
+
+Deal.hasMany(HistoryRatingManager, { as: "rating-history" });
+HistoryRatingManager.belongsTo(Deal, { as: "deal" });
 
 ModuleForScenario.belongsToMany(Scenario, {
   through: ModuleWithScenario, 
@@ -383,6 +392,6 @@ module.exports = {
   Deal,
   ModuleText,
   TypeScenario,
-  Rating,
+  HistoryRatingManager,
   HistoryHappedBirtDay,
 };

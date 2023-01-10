@@ -50,6 +50,45 @@ class HistoryController {
       return next(ApiError.badRequest(error));
     }
   }
+  async getByDealIdHistorySendCoupon(req, res, next) {
+    try {
+      const {dealId } = req.query 
+      if (!dealId){
+        return next(ApiError.badRequest('error'));
+      }
+      const historySendCoupon = await HistorySendCoupon.findAll({where:{dealId}})
+      return res.json(historySendCoupon);
+    } catch (error) {
+      console.log(error);
+      return next(ApiError.badRequest(error));
+    }
+  }
+  async getByDealIdHistoryHappedBirthday(req, res, next) {
+    try {
+      const {dealId } = req.query 
+      if (!dealId){
+        return next(ApiError.badRequest('error'));
+      }
+      const historyHappedBirtday = await HistoryHappedBirtDay.findAll({where:{dealId}})
+      return res.json(historyHappedBirtday);
+    } catch (error) {
+      console.log(error);
+      return next(ApiError.badRequest(error));
+    }
+  }
+  // async getByDealIdHistoryReferralToAnotherSpecialist(req, res, next) {
+  //   try {
+  //     const {dealId } = req.query 
+  //     if (!dealId){
+  //       return next(ApiError.badRequest('error'));
+  //     }
+  //     const historyReferralToAnotherSpecialist = await HistoryReferralToAnotherSpecialist.findAll({where:{dealId}})
+  //     return res.json(historyReferralToAnotherSpecialist);
+  //   } catch (error) {
+  //     console.log(error);
+  //     return next(ApiError.badRequest(error));
+  //   }
+  // }
 }
 
 module.exports = new HistoryController();
